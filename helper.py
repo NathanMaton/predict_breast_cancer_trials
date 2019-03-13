@@ -140,7 +140,7 @@ def unique_drugs(trials):
         np.array([drug for row in unique_drug_list for drug in row.split(', ')]))
     return c
 
-def get_res(counts, trials):
+def generate_drugs_df(counts, trials):
     res, except_ids = [], []
     for k, v in counts.items():
         try:
@@ -154,16 +154,16 @@ def get_res(counts, trials):
     drugs_df = pd.DataFrame(
         res,
         columns=[
-            'drug', 'count', 'phase_1_success', 'phase_2_success',
+            'drug', 'num_of_trials', 'phase_1_success', 'phase_2_success',
             'phase_3_success', 'phase_1_2_success', 'phase_2_3_success',
             'phase_1_start', 'phase_1_first_end', 'phase_1_last_end'
         ])
 
     ans = [
         drugs_df[drugs_df['phase_1_success'] == True].shape[0] / drugs_df.shape[0],
-        drugs_df[drugs_df['phase_2_success'] == True].shape[0] / drugs_df.shape[0],
-        drugs_df[drugs_df['phase_3_success'] == True].shape[0] / drugs_df.shape[0]
+        drugs_df[drugs_df['phase_2_success'] == True].shape[0] / drugs_df[drugs_df['phase_1_success'] == True].shape[0],
+        drugs_df[drugs_df['phase_3_success'] == True].shape[0] / drugs_df[drugs_df['phase_2_success'] == True].shape[0]
     ]
     print (f'probs are{[round(100 * i, 2) for i in ans]}')
-    sorted_drugs = drugs_df.sort_values('count', ascending=False)
+    sorted_drugs = drugs_df.sort_values('num_of_trials', ascending=False)
     return sorted_drugs, except_ids
