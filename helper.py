@@ -5,61 +5,40 @@ import seaborn as sns
 from collections import Counter
 import re
 
+# # not DRY as the answers to make multiargument apply functions involved more complicated things than I wanted.
+def strip_planned_start(x):
+    date_str = re.findall("[\d\s\w]*", x["Trial Initiation date"])[0].strip()
+    plan_str = re.findall("planned", x["Trial Initiation date"])
+    if plan_str:
+        return 0
+    else:
+        return pd.to_datetime(date_str)
+
+def strip_planned_end(x):
+    date_str = re.findall("[\d\s\w]*", x["Trial End date"])[0].strip()
+    plan_str = re.findall("planned", x["Trial End date"])
+    if plan_str:
+        return 0
+    else:
+        return pd.to_datetime(date_str)
 
 def load_data():
-
     trials = pd.read_excel("bcdrugsct.xlsx")
     trials = trials[trials["Primary Drugs"].isna() == False]
-    cols = [
-        "Trial ID",
-        "Mechanism of action",
-        "Drug class (therapeutic effect)",
-        "Drug class (chemical)",
-        "Indication",
-        "Organisations",
-        "Trial Design",
-        "Location",
-        "Phase of Trial",
-        "Subject Age",
-        "Planned Subject Number",
-        "Trial Centre Details",
-        "Lead Centre",
-        "Trial Initiation date",
-        "Trial End date",
-        "Trial Status",
-        "Trial History",
-        "Diseases treated",
-        "Primary Drugs",
-    ]
-    # smaller_trials = trials[cols]
-    date_cols = [
-        "Phase of Trial",
-        "Trial Initiation date",
-        "Trial End date",
-        "trial_start",
-        "trial_end",
-    ]
+    trials["trial_start"] = trials.apply(strip_planned_start, axis=1)
+    trials["trial_end"] = trials.apply(strip_planned_end, axis=1)
+    start_mask = trials["trial_start"] != 0
+    end_mask = trials["trial_end"] != 0
+    trials = trials[(start_mask) & (end_mask)]
+
+    start_before_2019_mask = trials["trial_start"] < np.datetime64('2019-01-01')
+    end_before_2019_mask = trials["trial_end"] < np.datetime64('2019-01-01')
+    trials = trials[(start_before_2019_mask) & (end_before_2019_mask)]
+
     if trials["Primary Drugs"].isna().sum() > 0:
         print("did not remove all na drug rows")
 
     return trials
-
-
-# not DRY as the answers to make multiargument apply functions involved more complicated things than I wanted.
-def start_to_datetime(x):
-    date_str = re.findall("[\d\s\w]*", x["Trial Initiation date"])[0].strip()
-    if date_str == "":
-        return pd.NaT
-    else:
-        return pd.to_datetime(date_str)
-
-
-def end_to_datetime(x):
-    date_str = re.findall("[\d\s\w]*", x["Trial End date"])[0].strip()
-    if date_str == "":
-        return pd.NaT
-    else:
-        return pd.to_datetime(date_str)
 
 def p1_subject_counts(df):
     # see if the drug has a trial in each phase.
@@ -172,8 +151,8 @@ def pipeline(drug_name, count, trials):
     df = cleaned_drug_trials.join(phase_dummies)
 
     # convert times to time objects
-    df["trial_start"] = df.apply(start_to_datetime, axis=1)
-    df["trial_end"] = df.apply(end_to_datetime, axis=1)
+    # df["trial_start"] = df.apply(start_to_datetime, axis=1)
+    # df["trial_end"] = df.apply(end_to_datetime, axis=1)
 
     p1_start, p1_first_end, p1_last_end, p2_start, p2_first_end, p2_last_end = get_times(df)
 
