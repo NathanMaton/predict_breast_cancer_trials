@@ -61,6 +61,10 @@ def end_to_datetime(x):
     else:
         return pd.to_datetime(date_str)
 
+def p1_subject_counts(df):
+    # see if the drug has a trial in each phase.
+    p1_df= df[df["Phase of Trial"]=='Phase I']
+    return sum(p1_df['Planned Subject Number'].values)
 
 def prob_of_success(drug_trials):
     # see if the drug has a trial in each phase.
@@ -99,58 +103,38 @@ def prob_of_success(drug_trials):
 def get_times(df):
     # finds only the dates that aren't false for each phase.
     try:
-        p1_start = np.min(
-            list(
-                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
-                    "trial_start"
-                ].values
+        phases = ["Phase I", "Phase II", "Phase III"]
+        res = []
+        for idx, v in enumerate(phases[:-1]):
+            p_start = np.min(
+                list(
+                    df[(df["trial_start"] != False) & (df["Phase of Trial"] ==  phases[idx])][
+                        "trial_start"
+                    ].values
+                )
             )
-        )
+            res.append(p_start)
 
-        p1_first_end = np.min(
-            list(
-                df[
-                    (df["trial_start"] != False)
-                    & (df["Phase of Trial"] == "Phase II")
-                    & (df["trial_start"] > p1_start)
-                ]["trial_start"].values
+            p_first_end = np.min(
+                list(
+                    df[
+                        (df["trial_start"] != False)
+                        & (df["Phase of Trial"] ==  phases[idx+1])
+                        & (df["trial_start"] > p_start)
+                    ]["trial_start"].values
+                )
             )
-        )
+            res.append(p_first_end)
 
-        p1_last_end = np.max(
-            list(
-                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
-                    "trial_start"
-                ].values
+            p_last_end = np.max(
+                list(
+                    df[(df["trial_start"] != False) & (df["Phase of Trial"] ==  phases[idx])][
+                        "trial_start"
+                    ].values
+                )
             )
-        )
-
-        p2_start = np.min(
-            list(
-                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase II")][
-                    "trial_start"
-                ].values
-            )
-        )
-
-        p2_first_end = np.min(
-            list(
-                df[
-                    (df["trial_start"] != False)
-                    & (df["Phase of Trial"] == "Phase III")
-                    & (df["trial_start"] > p2_start)
-                ]["trial_start"].values
-            )
-        )
-
-        p2_last_end = np.max(
-            list(
-                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase II")][
-                    "trial_start"
-                ].values
-            )
-        )
-        return p1_start, p1_first_end, p1_last_end, p2_start, p2_first_end, p2_last_end
+            res.append(p_last_end)
+        return res
     except:
         return pd.NaT, pd.NaT, pd.NaT, pd.NaT, pd.NaT, pd.NaT
 
@@ -177,7 +161,7 @@ def pipeline(drug_name, count, trials):
     if pass_phase_1 == False:
         return return_null_row(drug_name, count)
 
-    # get rid of rows outside Phase I or II
+    #subset to majority of data
     trial_phases = ["Phase I", "Phase II", "Phase III", "Phase IV", "Phase I/II", "Phase II/III"]
     cleaned_drug_trials = drug_trials[
         drug_trials["Phase of Trial"].isin(trial_phases)
@@ -190,10 +174,6 @@ def pipeline(drug_name, count, trials):
     # convert times to time objects
     df["trial_start"] = df.apply(start_to_datetime, axis=1)
     df["trial_end"] = df.apply(end_to_datetime, axis=1)
-
-    # commented out to try and solve for cases with Phase I trials having NAT like 'Epirubicin'
-    # if  numpy.datetime64('NaT') in df[df['Phase of Trial'] == 'Phase I']['trial_start'].values:
-    #    return return_null_row(drug_name, count)
 
     p1_start, p1_first_end, p1_last_end, p2_start, p2_first_end, p2_last_end = get_times(df)
 
