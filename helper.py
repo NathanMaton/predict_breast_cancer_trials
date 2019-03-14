@@ -98,7 +98,7 @@ def prob_of_success(drug_trials):
 
 def get_times(df):
     # finds only the dates that aren't false for each phase.
-    phase_1_start = np.min(
+    p1_start = np.min(
         list(
             df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
                 "trial_start"
@@ -106,24 +106,24 @@ def get_times(df):
         )
     )
 
-    phase_1_first_end = np.min(
+    p1_first_end = np.min(
         list(
             df[
                 (df["trial_start"] != False)
                 & (df["Phase of Trial"] == "Phase II")
-                & (df["trial_start"] > phase_1_start)
+                & (df["trial_start"] > p1_start)
             ]["trial_start"].values
         )
     )
 
-    phase_1_last_end = np.max(
+    p1_last_end = np.max(
         list(
             df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
                 "trial_start"
             ].values
         )
     )
-    return phase_1_start, phase_1_first_end, phase_1_last_end
+    return p1_start, p1_first_end, p1_last_end
 
 
 def return_null_row(drug_name, count):
@@ -148,7 +148,7 @@ def pipeline(drug_name, count, trials):
         return return_null_row(drug_name, count)
 
     # get rid of rows outside Phase I or II
-    trial_phases = ["Phase I", "Phase II"]
+    trial_phases = ["Phase I", "Phase II", "Phase III", "Phase IV", "Phase I/II", "Phase II/III"]
     cleaned_drug_trials = drug_trials[
         drug_trials["Phase of Trial"].isin(trial_phases)
     ]  # only rows w/ clean trials
@@ -165,7 +165,7 @@ def pipeline(drug_name, count, trials):
     # if  numpy.datetime64('NaT') in df[df['Phase of Trial'] == 'Phase I']['trial_start'].values:
     #    return return_null_row(drug_name, count)
 
-    phase_1_start, phase_1_first_end, phase_1_last_end = get_times(df)
+    p1_start, p1_first_end, p1_last_end = get_times(df)
 
     res = [
         drug_name,
@@ -175,9 +175,9 @@ def pipeline(drug_name, count, trials):
         pass_phase_3,
         pass_phase_one_two,
         pass_phase_two_three,
-        phase_1_start,
-        phase_1_first_end,
-        phase_1_last_end,
+        p1_start,
+        p1_first_end,
+        p1_last_end,
     ]
     return res
 
