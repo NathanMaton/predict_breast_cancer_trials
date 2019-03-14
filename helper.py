@@ -98,36 +98,66 @@ def prob_of_success(drug_trials):
 
 def get_times(df):
     # finds only the dates that aren't false for each phase.
-    p1_start = np.min(
-        list(
-            df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
-                "trial_start"
-            ].values
+    try:
+        p1_start = np.min(
+            list(
+                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
+                    "trial_start"
+                ].values
+            )
         )
-    )
 
-    p1_first_end = np.min(
-        list(
-            df[
-                (df["trial_start"] != False)
-                & (df["Phase of Trial"] == "Phase II")
-                & (df["trial_start"] > p1_start)
-            ]["trial_start"].values
+        p1_first_end = np.min(
+            list(
+                df[
+                    (df["trial_start"] != False)
+                    & (df["Phase of Trial"] == "Phase II")
+                    & (df["trial_start"] > p1_start)
+                ]["trial_start"].values
+            )
         )
-    )
 
-    p1_last_end = np.max(
-        list(
-            df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
-                "trial_start"
-            ].values
+        p1_last_end = np.max(
+            list(
+                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase I")][
+                    "trial_start"
+                ].values
+            )
         )
-    )
-    return p1_start, p1_first_end, p1_last_end
+
+        p2_start = np.min(
+            list(
+                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase II")][
+                    "trial_start"
+                ].values
+            )
+        )
+
+        p2_first_end = np.min(
+            list(
+                df[
+                    (df["trial_start"] != False)
+                    & (df["Phase of Trial"] == "Phase III")
+                    & (df["trial_start"] > p2_start)
+                ]["trial_start"].values
+            )
+        )
+
+        p2_last_end = np.max(
+            list(
+                df[(df["trial_start"] != False) & (df["Phase of Trial"] == "Phase II")][
+                    "trial_start"
+                ].values
+            )
+        )
+        return p1_start, p1_first_end, p1_last_end, p2_start, p2_first_end, p2_last_end
+    except:
+        return pd.NaT, pd.NaT, pd.NaT, pd.NaT, pd.NaT, pd.NaT
 
 
 def return_null_row(drug_name, count):
-    return [drug_name, count, False, False, False, False, False, pd.NaT, pd.NaT, pd.NaT]
+    return [drug_name, count, False, False, False, False, False,
+            pd.NaT, pd.NaT, pd.NaT, pd.NaT, pd.NaT, pd.NaT]
 
 
 def pipeline(drug_name, count, trials):
@@ -165,7 +195,7 @@ def pipeline(drug_name, count, trials):
     # if  numpy.datetime64('NaT') in df[df['Phase of Trial'] == 'Phase I']['trial_start'].values:
     #    return return_null_row(drug_name, count)
 
-    p1_start, p1_first_end, p1_last_end = get_times(df)
+    p1_start, p1_first_end, p1_last_end, p2_start, p2_first_end, p2_last_end = get_times(df)
 
     res = [
         drug_name,
@@ -178,23 +208,22 @@ def pipeline(drug_name, count, trials):
         p1_start,
         p1_first_end,
         p1_last_end,
+        p2_start,
+        p2_first_end,
+        p2_last_end
     ]
     return res
 
 
 def unique_drugs(trials):
-    unique_drug_list = list(trials["Primary Drugs"].unique())
-    unique_drugs = {drug for row in unique_drug_list for drug in row.split(", ")}
-
-    # are these 3 lines necessary?
-    # drug_counts = trials['Primary Drugs'].value_counts()
-    # drugs_10_trials = drug_counts[drug_counts > 1].index
-    # all_drugs = drug_counts.index
-
+    messy_drug_list = list(trials["Primary Drugs"].values)
+    single_word_drugs_list = [drug for row in messy_drug_list for drug in row.split(", ")]
     c = Counter(
-        np.array([drug for row in unique_drug_list for drug in row.split(", ")])
+        np.array([drug for row in single_word_drugs_list for drug in row.split(", ")])
     )
-    return c
+    filtered_c = {k: v for k, v in c.items() if v > 0}
+
+    return filtered_c
 
 
 def generate_drugs_df(counts, trials):
@@ -220,6 +249,9 @@ def generate_drugs_df(counts, trials):
             "phase_1_start",
             "phase_1_first_end",
             "phase_1_last_end",
+            "phase_2_start",
+            "phase_2_first_end",
+            "phase_2_last_end"
         ],
     )
 
