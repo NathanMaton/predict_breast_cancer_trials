@@ -41,7 +41,7 @@ def end_to_datetime(x):
 
 
 def prob_of_success(drug_trials):
-    #see if the drug has phase I and II in data.
+    #see if the drug has a trial in each phase.
     unique_trial_values = drug_trials['Phase of Trial'].unique()
     (pass_phase_1, pass_phase_2, pass_phase_3, pass_phase_one_two,
      pass_phase_two_three) = (False, False, False, False, False)
@@ -88,6 +88,11 @@ def get_times(df):
                 & (df['Phase of Trial'] == 'Phase I')]['trial_start'].values))
     return phase_1_start, phase_1_first_end, phase_1_last_end
 
+def return_null_row(drug_name, count):
+    return [
+        drug_name, count, False, False, False, False, False, pd.NaT,
+        pd.NaT, pd.NaT
+    ]
 
 def pipeline(drug_name, count, trials):
     '''
@@ -100,10 +105,8 @@ def pipeline(drug_name, count, trials):
      pass_phase_two_three) = prob_of_success(drug_trials)
 
     if pass_phase_1 == False:
-        return [
-            drug_name, count, False, False, False, False, False, pd.NaT,
-            pd.NaT, pd.NaT
-        ]
+        return return_null_row(drug_name, count)
+
 
     #get rid of rows outside Phase I or II
     trial_phases = ['Phase I', 'Phase II']
@@ -117,6 +120,10 @@ def pipeline(drug_name, count, trials):
     #convert times to time objects
     df['trial_start'] = df.apply(start_to_datetime, axis=1)
     df['trial_end'] = df.apply(end_to_datetime, axis=1)
+
+    #commented out to try and solve for cases with Phase I trials having NAT like 'Epirubicin'
+    #if  numpy.datetime64('NaT') in df[df['Phase of Trial'] == 'Phase I']['trial_start'].values:
+    #    return return_null_row(drug_name, count)
 
     phase_1_start, phase_1_first_end, phase_1_last_end = get_times(df)
 
@@ -132,9 +139,9 @@ def unique_drugs(trials):
     unique_drugs = {drug for row in unique_drug_list for drug in row.split(', ')}
 
     #are these 3 lines necessary?
-    drug_counts = trials['Primary Drugs'].value_counts()
-    drugs_10_trials = drug_counts[drug_counts > 1].index
-    all_drugs = drug_counts.index
+    # drug_counts = trials['Primary Drugs'].value_counts()
+    # drugs_10_trials = drug_counts[drug_counts > 1].index
+    # all_drugs = drug_counts.index
 
     c = Counter(
         np.array([drug for row in unique_drug_list for drug in row.split(', ')]))
@@ -167,3 +174,8 @@ def generate_drugs_df(counts, trials):
     print (f'probs are{[round(100 * i, 2) for i in ans]}')
     sorted_drugs = drugs_df.sort_values('num_of_trials', ascending=False)
     return sorted_drugs, except_ids
+
+def inspect_counts_of_exceptions(counts, exceptions):
+    for k,v in c.items():
+        if k in exceptions:
+            print(f'exception drug {k} has {v} trials in data')
