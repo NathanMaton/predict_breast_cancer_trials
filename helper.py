@@ -5,7 +5,7 @@ import seaborn as sns
 from collections import Counter
 import re
 
-# # not DRY as the answers to make multiargument apply functions involved more complicated things than I wanted.
+# not DRY as the answers to make multiargument apply functions involved more complicated things than I wanted.
 def strip_planned_start(x):
     date_str = re.findall("[\d\s\w]*", x["Trial Initiation date"])[0].strip()
     plan_str = re.findall("planned", x["Trial Initiation date"])
