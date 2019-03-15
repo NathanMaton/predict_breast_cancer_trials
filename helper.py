@@ -144,7 +144,7 @@ def pipeline(drug_name, count, trials):
     trial_phases = ["Phase I", "Phase II", "Phase III", "Phase IV", "Phase I/II", "Phase II/III"]
     cleaned_drug_trials = drug_trials[
         drug_trials["Phase of Trial"].isin(trial_phases)
-    ]  # only rows w/ clean trials
+    ]
 
     # turn categorial variables into ordinals
     phase_dummies = pd.get_dummies(cleaned_drug_trials["Phase of Trial"])
