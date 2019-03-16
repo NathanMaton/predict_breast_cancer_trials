@@ -40,6 +40,27 @@ def load_data():
 
     return trials
 
+def remove_dup_trial():
+    df_temp = load_data()
+    #c = unique_drugs(trials)
+    #df_data, exceptions = generate_drugs_df(c, trials)
+    df_temp = df_temp.reset_index()
+
+
+    ## expanded unique drugs to get a dataframe we can group by
+    dupes = []
+    for idx, item_list in enumerate(df_temp["Primary Drugs"]):
+        split_list = item_list.split(",")
+        if len(split_list)>1:
+            for i in split_list:
+                df_temp.append(df_temp.iloc[idx,:])
+                df_temp.iloc[-1,-3]=i
+            dupes.append(idx)
+
+    df_trials = df_temp.drop(dupes)
+
+
+
 def p1_subject_counts(df):
     # see if the drug has a trial in each phase.
     p1_df= df[df["Phase of Trial"]=='Phase I']
@@ -77,6 +98,11 @@ def prob_of_success(drug_trials):
         pass_phase_one_two,
         pass_phase_two_three,
     ]
+
+
+
+
+
 
 
 def get_times(df):
