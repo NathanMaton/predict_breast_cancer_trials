@@ -190,12 +190,30 @@ def feature_orangization_count(df_trials,df_data):
     return df_data
 
 
+def separate_phases_into_dfs(df_data):
+    '''
+    Takes in df_data, parses it out into separate dataframes by phase.
+
+    Input = df_data
+
+    Output = list_of_dfs where it is currently hard coded to 3.
+    '''
+    # create list of phases to loop through, intentionally leave space
+    # to help the regex filter
+    phase_list = ["Phase I ","Phase II ", "Phase III "]
+
+    list_of_dfs = []
+    for i in phase_list:
+        phase = df_data.filter(regex=i).reset_index()
+        phase["Number of Organizations"] = pd.Series(data = df_data.loc[:,"Number of Organizations"])
+        phase.set_index("Primary Drugs", inplace=True)
+        list_of_dfs.append(phase)
+    return list_of_dfs
+
 if __name__ == '__main__':
 
     df_trials = remove_dup_trial()
     df_data = df_feature_extraction_by_phase(df_trials=df_trials)
     df_data = feature_phase_pass_nopass(df_data)
     df_data = feature_orangization_count(df_trials,df_data)
-
-
-df_data.filter(regex="Phase II ")
+    list_of_dfs = separate_phases_into_dfs(df_data)
