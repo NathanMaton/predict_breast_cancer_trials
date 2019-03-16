@@ -177,12 +177,9 @@ def pipeline(drug_name, count, trials):
 def unique_drugs(trials):
     messy_drug_list = list(trials["Primary Drugs"].values)
     single_word_drugs_list = [drug for row in messy_drug_list for drug in row.split(", ")]
-    c = Counter(
-        np.array([drug for row in single_word_drugs_list for drug in row.split(", ")])
-    )
-    filtered_c = {k: v for k, v in c.items() if v > 0}
-
-    return filtered_c
+    word_counts = Counter(single_word_drugs_list)
+    filtered_word_counts = {k: v for k, v in word_counts.items() if v > 0}
+    return filtered_word_counts
 
 
 def generate_drugs_df(counts, trials):
