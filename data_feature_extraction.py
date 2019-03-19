@@ -109,6 +109,21 @@ def groupby_object_list(df_trials):
     df_trials = df_trials[zero_time_delta_mask]
     groupby_time_deltas = pd.to_timedelta(df_trials.groupby(["Primary Drugs","Phase of Trial"])["nano_time_diff"].agg('mean')).reset_index()
 
+    #add in trial status as a 3rd feature to get extracted here.
+    #groupby_trial_status = df_trials.groupby(["Primary Drugs","Trial Status"])["Planned Subject Number"].agg('mean').reset_index()
+    #df_trials.groupby(["Primary Drugs","Phase of Trial", "Trial Status"])["Trial Status"].agg('sum')
+    #df_trials["Trial Status"].value_counts()
+    #name_subject_mean=[i+' subject mean' for i in phase_of_trial_list]
+    #df_trials["Trial Status"].unique()
+    # get counts of each.
+
+
+#'''
+#array(['Completed', 'Discontinued', 'Active, no longer recruiting',
+#       'Withdrawn prior to enrolment', 'Recruiting', 'Suspended'],
+#      dtype=object)
+#'''
+
     groupby_object_list = [groupby_patient_count,groupby_time_deltas]
 
     name_trial_length=[i+' trial length' for i in phase_of_trial_list]
@@ -210,6 +225,9 @@ def separate_phases_into_dfs(df_data):
         list_of_dfs.append(phase)
     return list_of_dfs
 
+#df_data.head()
+
+
 if __name__ == '__main__':
 
     df_trials = remove_dup_trial()
@@ -217,3 +235,19 @@ if __name__ == '__main__':
     df_data = feature_phase_pass_nopass(df_data)
     df_data = feature_orangization_count(df_trials,df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
+
+
+
+    # type(list_of_dfs[0]["Phase I trial length"].values[3])
+    # from sklearn.linear_model import LogisticRegression
+    # X = list_of_dfs[0].drop("Phase I Pass", axis=1)
+    # X.head()
+    # y = list_of_dfs[0]["Phase I Pass"]
+    # clf = LogisticRegression(random_state=0).fit(X, y)
+    # clf.predict(X[:2, :])
+    #
+    # clf.predict_proba(X[:2, :])
+    #
+    # X["Phase I Pass"]
+    #
+    # clf.score(X, y)list_of_dfs[0].head()
