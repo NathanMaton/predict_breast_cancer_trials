@@ -55,6 +55,7 @@ class ClassificationModel():
     def wrapper(self):
         self.test_train_split()
         self.grid_search(cv=5)
+        self.predict_test()
 
     def timedelta_change(self,x):
         # Applies a change to the days to a float, there's a mix of datetime Objects and floats in the dataframe column length
@@ -357,13 +358,14 @@ class ClassificationModel():
 
             #print(f'Odds coefficients: {LR_coef[0]}')
 
-#     def predict_test(self):
-#
-#         # Make a prediction on entire training set
-#         y_pred = model_gscv.best_estimator_.predict(X_test)
-#
-# report = classification_report(y_true=y_test, y_pred=y_pred)
-# print(report)
+    def predict_test(self):
+
+        # Make a prediction on entire training set
+        self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
+
+        report = classification_report(y_true=self.y_test, y_pred=self.y_pred)
+        print()
+        print(report)
 #
 # sum(y_test==0)/len(y_test)
 # sum(y_pred==0)/len(y_pred)
