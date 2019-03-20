@@ -109,21 +109,6 @@ def groupby_object_list(df_trials):
     df_trials = df_trials[zero_time_delta_mask]
     groupby_time_deltas = pd.to_timedelta(df_trials.groupby(["Primary Drugs","Phase of Trial"])["nano_time_diff"].agg('mean')).reset_index()
 
-    #add in trial status as a 3rd feature to get extracted here.
-    #groupby_trial_status = df_trials.groupby(["Primary Drugs","Trial Status"])["Planned Subject Number"].agg('mean').reset_index()
-    #df_trials.groupby(["Primary Drugs","Phase of Trial", "Trial Status"])["Trial Status"].agg('sum')
-    #df_trials["Trial Status"].value_counts()
-    #name_subject_mean=[i+' subject mean' for i in phase_of_trial_list]
-    #df_trials["Trial Status"].unique()
-    # get counts of each.
-
-
-#'''
-#array(['Completed', 'Discontinued', 'Active, no longer recruiting',
-#       'Withdrawn prior to enrolment', 'Recruiting', 'Suspended'],
-#      dtype=object)
-#'''
-
     groupby_object_list = [groupby_patient_count,groupby_time_deltas]
 
     name_trial_length=[i+' trial length' for i in phase_of_trial_list]
@@ -204,6 +189,28 @@ def feature_orangization_count(df_trials,df_data):
 
     return df_data
 
+def extract_feature_trial_status(df_trials, df_data):
+    '''
+    Assumes df_data already exist with a table on the unique drug names in the index
+    '''
+
+    #collapse all potential unique trial status down to just Completed, Discontinued
+    #and other because the others are a small (32 of ~1450) set of the results currently
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Active, no longer recruiting","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Withdrawn prior to enrolment","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Recruiting","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Suspended","Other")
+
+    status_groups = df_trials.groupby(["Primary Drugs", "Trial Status"])["Trial Status"].agg('count')
+    status_groups = status_groups.rename('Trial_Status_Count').reset_index() #couldn't reset index without renaming
+    pivoted_status_groups = status_groups.pivot("Primary Drugs","Trial Status", "Trial_Status_Count")
+    pivoted_status_groups = pivoted_status_groups.fillna(0)
+    df_data = df_data.merge(pivoted_status_groups, left_index=True, right_index=True, how='left')
+
+    return df_data #change this when done w/ function
+
+
+
 
 def separate_phases_into_dfs(df_data):
     '''
@@ -233,21 +240,6 @@ if __name__ == '__main__':
     df_trials = remove_dup_trial()
     df_data = df_feature_extraction_by_phase(df_trials=df_trials)
     df_data = feature_phase_pass_nopass(df_data)
+    df_data = extract_feature_trial_status(df_trials=df_trials, df_data=df_data)
     df_data = feature_orangization_count(df_trials,df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
-
-
-
-    # type(list_of_dfs[0]["Phase I trial length"].values[3])
-    # from sklearn.linear_model import LogisticRegression
-    # X = list_of_dfs[0].drop("Phase I Pass", axis=1)
-    # X.head()
-    # y = list_of_dfs[0]["Phase I Pass"]
-    # clf = LogisticRegression(random_state=0).fit(X, y)
-    # clf.predict(X[:2, :])
-    #
-    # clf.predict_proba(X[:2, :])
-    #
-    # X["Phase I Pass"]
-    #
-    # clf.score(X, y)list_of_dfs[0].head()
