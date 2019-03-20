@@ -299,7 +299,6 @@ def save_data(df_data,list_of_dfs,date='SOMEDATE'):
 
 
 if __name__ == '__main__':
-
     df_trials = remove_dup_trial()
     df_data = df_feature_extraction_by_phase(df_trials=df_trials)
     df_data = feature_phase_pass_nopass(df_data)
@@ -307,6 +306,3 @@ if __name__ == '__main__':
     df_data = feature_orangization_count(df_trials,df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
     save_data(df_data,list_of_dfs,date='Mar20')
-
-
-df_data.head()

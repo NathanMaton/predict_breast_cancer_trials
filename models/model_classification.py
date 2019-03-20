@@ -269,6 +269,7 @@ class ClassificationModel():
         #
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     print('Running classification model')
     #df_data1 = pd.read_pickle('data/df_1.pk')
     #model1 = ClassificationModel(df_data=df_data1,model_type='xgboost')
@@ -279,3 +280,30 @@ if __name__ == '__main__':
     #
     # df_data3 = pd.read_pickle('data/df_3.pk')
     # model3 = ClassificationModel(df_data=df_data3,model_type='logistic_regression')
+=======
+    df_data1 = pd.read_pickle('data/df_1.pk')
+    model1 = ClassificationModel(df_data=df_data1,model_type='logistic_regression')
+
+    df_data2 = pd.read_pickle('data/df_1.pk')
+    model2 = ClassificationModel(df_data=df_data2,model_type='logistic_regression')
+
+    df_data3 = pd.read_pickle('data/df_2.pk')
+    model3 = ClassificationModel(df_data=df_data3,model_type='logistic_regression')
+
+# model.y_test[model.y_test==1]
+#
+# drugs = pd.Series(data = model.y_pred, index= model.y_test.index)
+#
+# drugs[drugs == 1]
+#
+# model.df_data.loc[['Tamoxifen','Letrozole','Docetaxel'],:]
+#
+#
+# model.df_data.loc[['Goserelin','Everolimus','Megestrol'],:]
+#
+#
+# model.df_data.describe()
+#
+# model.y_pred[model.y_pred==1]
+# model.y_pred
+>>>>>>> e326e3263f0e16ad695abaab329f84518bcff69b
