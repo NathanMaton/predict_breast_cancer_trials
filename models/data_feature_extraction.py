@@ -1,9 +1,43 @@
 import pandas as pd
 from collections import Counter
-from helper import load_data,pipeline, unique_drugs, generate_drugs_df
+#from models.helper import load_data,pipeline, unique_drugs, generate_drugs_df
 import re
 import numpy as np
 from fuzzywuzzy import fuzz, process
+
+def strip_planned_start(x):
+    date_str = re.findall("[\d\s\w]*", x["Trial Initiation date"])[0].strip()
+    plan_str = re.findall("planned", x["Trial Initiation date"])
+    if plan_str:
+        return 0
+    else:
+        return pd.to_datetime(date_str)
+
+def strip_planned_end(x):
+    date_str = re.findall("[\d\s\w]*", x["Trial End date"])[0].strip()
+    plan_str = re.findall("planned", x["Trial End date"])
+    if plan_str:
+        return 0
+    else:
+        return pd.to_datetime(date_str)
+
+def load_data():
+    trials = pd.read_excel("data/bcdrugsct.xlsx")
+    trials = trials[trials["Primary Drugs"].isna() == False]
+    trials["trial_start"] = trials.apply(strip_planned_start, axis=1)
+    trials["trial_end"] = trials.apply(strip_planned_end, axis=1)
+    start_mask = trials["trial_start"] != 0
+    end_mask = trials["trial_end"] != 0
+    trials = trials[(start_mask) & (end_mask)]
+
+    start_before_2019_mask = trials["trial_start"] < np.datetime64('2019-01-01')
+    end_before_2019_mask = trials["trial_end"] < np.datetime64('2019-01-01')
+    trials = trials[(start_before_2019_mask) & (end_before_2019_mask)]
+
+    if trials["Primary Drugs"].isna().sum() > 0:
+        print("did not remove all na drug rows")
+
+    return trials
 
 def remove_dup_trial():
     '''
@@ -205,15 +239,32 @@ def separate_phases_into_dfs(df_data):
     list_of_dfs = []
     for i in phase_list:
         phase = df_data.filter(regex=i).reset_index()
-        phase["Number of Organizations"] = pd.Series(data = df_data.loc[:,"Number of Organizations"])
+        phase["Number of Organizations"] = pd.Series(data = df_data["Number of Organizations"].values)
         phase.set_index("Primary Drugs", inplace=True)
         list_of_dfs.append(phase)
+        phase.to_pickle('data/df_phaseIfeatures_'+i+'.pk')
     return list_of_dfs
+
+
 
 if __name__ == '__main__':
 
-    df_trials = remove_dup_trial()
-    df_data = df_feature_extraction_by_phase(df_trials=df_trials)
-    df_data = feature_phase_pass_nopass(df_data)
-    df_data = feature_orangization_count(df_trials,df_data)
+    # df_trials = remove_dup_trial()
+    # df_data = df_feature_extraction_by_phase(df_trials=df_trials)
+    # df_data = feature_phase_pass_nopass(df_data)
+    # df_data = feature_orangization_count(df_trials,df_data)
+
+    df_data = pd.read_pickle('data/df_data_phase_I.pk')
     list_of_dfs = separate_phases_into_dfs(df_data)
+
+
+df_data.to_csv('mar18.csv')
+
+
+#df_data.to_pickle('df_data_phase_I.pk')
+df_data['Number of Organizations']
+
+import pickle
+with open("list_of_df_phase_I.txt", "wb") as fp:   #Pickling
+    pickle.dump(list_of_dfs, fp)
+pickle.to_pickle(list_of_dfs)
