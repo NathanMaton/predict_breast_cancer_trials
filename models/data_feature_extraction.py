@@ -223,6 +223,33 @@ def feature_orangization_count(df_trials,df_data):
 
     return df_data
 
+def extract_feature_trial_status(df_trials, df_data):
+    '''
+    Assumes df_data already exist with a table on the unique drug names in the index
+
+    This takes in df_trials and df_data, extracts out the counts of each trial status
+    per drug and returns each of those status values as a column and merges to the df_data
+    dataframe.
+    '''
+
+    #collapse all potential unique trial status down to just Completed, Discontinued
+    #and other because the others are a small (32 of ~1450) set of the results currently
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Active, no longer recruiting","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Withdrawn prior to enrolment","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Recruiting","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Suspended","Other")
+
+    status_groups = df_trials.groupby(["Primary Drugs", "Trial Status"])["Trial Status"].agg('count')
+    status_groups = status_groups.rename('Trial_Status_Count').reset_index() #couldn't reset index without renaming
+    status_groups.head()
+    pivoted_status_groups = status_groups.pivot("Primary Drugs","Trial Status", "Trial_Status_Count")
+    pivoted_status_groups = pivoted_status_groups.fillna(0)
+    df_data = df_data.merge(pivoted_status_groups, left_index=True, right_index=True, how='left')
+
+    return df_data
+
+
+
 
 def separate_phases_into_dfs(df_data):
     '''
@@ -245,16 +272,13 @@ def separate_phases_into_dfs(df_data):
         phase.to_pickle('data/df_phaseIfeatures_'+i+'.pk')
     return list_of_dfs
 
-
-
 if __name__ == '__main__':
 
-    # df_trials = remove_dup_trial()
-    # df_data = df_feature_extraction_by_phase(df_trials=df_trials)
-    # df_data = feature_phase_pass_nopass(df_data)
-    # df_data = feature_orangization_count(df_trials,df_data)
-
-    df_data = pd.read_pickle('data/df_data_phase_I.pk')
+    df_trials = remove_dup_trial()
+    df_data = df_feature_extraction_by_phase(df_trials=df_trials)
+    df_data = feature_phase_pass_nopass(df_data)
+    df_data = extract_feature_trial_status(df_trials=df_trials, df_data=df_data)
+    df_data = feature_orangization_count(df_trials,df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
 
 
