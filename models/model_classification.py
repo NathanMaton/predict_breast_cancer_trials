@@ -18,7 +18,12 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 
+# import logger
+from loguru import logger
 
+
+# Start a log filter
+logger.add(f'logs/classificationmodel.log')
 
 class ClassificationModel():
 
@@ -41,9 +46,11 @@ class ClassificationModel():
             'xgboost':self.xgboost_model,
             }
 
+
         #Load this model
         try:
             model_dict[model_type]()
+            #logger.info(f'Running: {model_type}')
         except:
             print('Please enter in a valid model type')
             return
@@ -89,7 +96,7 @@ class ClassificationModel():
         # other columns as feature
         # First check if the column there's only one column with pass in it
         if self.df_data.filter(regex='Pass').shape[1] != 1:
-            print('More than one pass label column - adjust column names')
+            logger.info('More than one pass label column - adjust column names')
             return
 
         # Pulls the column name
@@ -343,21 +350,14 @@ class ClassificationModel():
                               return_train_score=False)
         self.model_gscv.fit(self.X_train, self.y_train)
 
-
-        print('Best model')
-        print(f"CV score {self.model_gscv.best_score_}")
-        print(f"Best parameters: {self.model_gscv.best_params_}")
+        logger.info(f"CV score {self.model_gscv.best_score_}")
+        logger.info(f"Best parameters: {self.model_gscv.best_params_}")
 
         if self.model_type=='logistic_regression':
             LR_coef = np.exp(self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
-
-            #print()
-
             features = self.X_train.columns.tolist()
-            print(f'Odds coefficients')
-            print(list(zip(features,np.round(LR_coef,3))))
-
-            #print(f'Odds coefficients: {LR_coef[0]}')
+            logger.info(f'Odds coefficients')
+            logger.info(list(zip(features,np.round(LR_coef,3))))
 
     def predict_test(self):
 
@@ -365,37 +365,17 @@ class ClassificationModel():
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
 
         self.score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
-        print(f'Precision Score: {np.round(self.score,3)}')
-        #print(report)
-#
-# sum(y_test==0)/len(y_test)
-# sum(y_pred==0)/len(y_pred)
-
-
+        logger.info(f'Precision Test Score: {np.round(self.score,3)}')
+        logger.info(f'-------------------------------')
+        #
 
 if __name__ == '__main__':
-    df_data1 = pd.read_pickle('data/df_0.pk')
-    model1 = ClassificationModel(df_data=df_data1,model_type='logistic_regression')
+    print('Running classification model')
+    # df_data1 = pd.read_pickle('data/df_1.pk')
+    # model1 = ClassificationModel(df_data=df_data1,model_type='logistic_regression')
 
-    df_data2 = pd.read_pickle('data/df_1.pk')
-    model2 = ClassificationModel(df_data=df_data2,model_type='logistic_regression')
-
-    df_data3 = pd.read_pickle('data/df_2.pk')
-    model3 = ClassificationModel(df_data=df_data3,model_type='logistic_regression')
-
-model.y_test[model.y_test==1]
-
-drugs = pd.Series(data = model.y_pred, index= model.y_test.index)
-
-drugs[drugs == 1]
-
-model.df_data.loc[['Tamoxifen','Letrozole','Docetaxel'],:]
-
-
-model.df_data.loc[['Goserelin','Everolimus','Megestrol'],:]
-
-
-model.df_data.describe()
-
-model.y_pred[model.y_pred==1]
-model.y_pred
+    # df_data2 = pd.read_pickle('data/df_2.pk')
+    # model2 = ClassificationModel(df_data=df_data2,model_type='logistic_regression')
+    #
+    # df_data3 = pd.read_pickle('data/df_3.pk')
+    # model3 = ClassificationModel(df_data=df_data3,model_type='logistic_regression')
