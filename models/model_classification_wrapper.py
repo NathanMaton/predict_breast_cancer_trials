@@ -6,7 +6,7 @@ from loguru import logger
 # Start a log filter
 logger.add(f'logs/classificationmodel.log')
 
-def run_all_model_phases(models,log_name='test'):
+def run_all_model_class_models(models):
     '''
     Looks through each phase and runs all the models user specifies
     models should be a list of model names availble
@@ -14,12 +14,12 @@ def run_all_model_phases(models,log_name='test'):
     Example = models = ['logistic_regression', 'gaussian_naive_bayes',\
     'multinomial_naive_bayes','random_forest']
     '''
-    phases = ['1','2','3']
+    phases = ['I','II','III']
 
-    for phase in phases:
+    for idx,phase in enumerate(phases):
         for model_type in models:
-            logger.info(f'Working Phase:{phase} Model:{model_type}')
-            df_data = pd.read_pickle('data/df_'+phase+'.pk')
+            logger.info(f'Working Phase {phase} - {model_type}')
+            df_data = pd.read_pickle('data/df_'+str(idx+1)+'.pk')
             model = class_obj.ClassificationModel(
                         df_data=df_data,
                         model_type=model_type,
@@ -29,4 +29,4 @@ if __name__ == '__main__':
     models = ['logistic_regression']
     # , 'gaussian_naive_bayes','multinomial_naive_bayes', \
     # 'random_forest']
-    run_all_model_phases(models)
+    run_all_model_class_models(models)

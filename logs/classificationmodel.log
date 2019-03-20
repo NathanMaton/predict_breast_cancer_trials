@@ -1,27 +1,65 @@
-2019-03-20 15:06:41.717 | INFO     | __main__:run_all_model_phases:13 - Working Phase:1 Model:logistic_regression
-2019-03-20 15:06:41.731 | INFO     | models.model_classification:__init__:53 - Running: logistic_regression
-2019-03-20 15:06:41.961 | INFO     | models.model_classification:grid_search:353 - Best model
-2019-03-20 15:06:41.962 | INFO     | models.model_classification:grid_search:354 - CV score 0.660587017415662
-2019-03-20 15:06:41.963 | INFO     | models.model_classification:grid_search:355 - Best parameters: {'logistic__C': 0.016681005372000592, 'logistic__penalty': 'l2'}
-2019-03-20 15:06:41.964 | INFO     | models.model_classification:grid_search:360 - Odds coefficients
-2019-03-20 15:06:41.966 | INFO     | models.model_classification:grid_search:361 - [('Phase I subject mean', 0.737), ('Phase I trial length', 0.829), ('Number of Organizations', 1.188)]
-2019-03-20 15:06:41.969 | INFO     | models.model_classification:predict_test:369 - Precision Score: 0.696
-2019-03-20 15:06:41.971 | INFO     | models.model_classification:predict_test:370 - ----------
-2019-03-20 15:06:41.972 | INFO     | __main__:run_all_model_phases:13 - Working Phase:2 Model:logistic_regression
-2019-03-20 15:06:41.984 | INFO     | models.model_classification:__init__:53 - Running: logistic_regression
-2019-03-20 15:06:42.202 | INFO     | models.model_classification:grid_search:353 - Best model
-2019-03-20 15:06:42.203 | INFO     | models.model_classification:grid_search:354 - CV score 0.7133308975764219
-2019-03-20 15:06:42.204 | INFO     | models.model_classification:grid_search:355 - Best parameters: {'logistic__C': 0.7742636826811278, 'logistic__penalty': 'l2'}
-2019-03-20 15:06:42.205 | INFO     | models.model_classification:grid_search:360 - Odds coefficients
-2019-03-20 15:06:42.206 | INFO     | models.model_classification:grid_search:361 - [('Phase II subject mean', 0.839), ('Phase II trial length', 1.283), ('Number of Organizations', 2.088)]
-2019-03-20 15:06:42.208 | INFO     | models.model_classification:predict_test:369 - Precision Score: 0.276
-2019-03-20 15:06:42.209 | INFO     | models.model_classification:predict_test:370 - ----------
-2019-03-20 15:06:42.211 | INFO     | __main__:run_all_model_phases:13 - Working Phase:3 Model:logistic_regression
-2019-03-20 15:06:42.221 | INFO     | models.model_classification:__init__:53 - Running: logistic_regression
-2019-03-20 15:06:42.430 | INFO     | models.model_classification:grid_search:353 - Best model
-2019-03-20 15:06:42.431 | INFO     | models.model_classification:grid_search:354 - CV score 0.9013080014614541
-2019-03-20 15:06:42.432 | INFO     | models.model_classification:grid_search:355 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
-2019-03-20 15:06:42.433 | INFO     | models.model_classification:grid_search:360 - Odds coefficients
-2019-03-20 15:06:42.433 | INFO     | models.model_classification:grid_search:361 - [('Phase III subject mean', 1.182), ('Phase III trial length', 2.192), ('Number of Organizations', 1.139)]
-2019-03-20 15:06:42.437 | INFO     | models.model_classification:predict_test:369 - Precision Score: 0.615
-2019-03-20 15:06:42.438 | INFO     | models.model_classification:predict_test:370 - ----------
+2019-03-20 15:22:48.883 | INFO     | __main__:run_all_model_class_models:13 - Working Phase:1 Model:logistic_regression
+2019-03-20 15:22:49.126 | INFO     | models.model_classification:grid_search:353 - CV score 0.660587017415662
+2019-03-20 15:22:49.127 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.016681005372000592, 'logistic__penalty': 'l2'}
+2019-03-20 15:22:49.129 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:22:49.130 | INFO     | models.model_classification:grid_search:360 - [('Phase I subject mean', 0.737), ('Phase I trial length', 0.829), ('Number of Organizations', 1.188)]
+2019-03-20 15:22:49.133 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.696
+2019-03-20 15:22:49.134 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:22:49.135 | INFO     | __main__:run_all_model_class_models:13 - Working Phase:2 Model:logistic_regression
+2019-03-20 15:22:49.357 | INFO     | models.model_classification:grid_search:353 - CV score 0.7133308975764219
+2019-03-20 15:22:49.358 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.7742636826811278, 'logistic__penalty': 'l2'}
+2019-03-20 15:22:49.360 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:22:49.361 | INFO     | models.model_classification:grid_search:360 - [('Phase II subject mean', 0.839), ('Phase II trial length', 1.283), ('Number of Organizations', 2.088)]
+2019-03-20 15:22:49.364 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.276
+2019-03-20 15:22:49.365 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:22:49.366 | INFO     | __main__:run_all_model_class_models:13 - Working Phase:3 Model:logistic_regression
+2019-03-20 15:22:49.597 | INFO     | models.model_classification:grid_search:353 - CV score 0.9013080014614541
+2019-03-20 15:22:49.598 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
+2019-03-20 15:22:49.599 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:22:49.599 | INFO     | models.model_classification:grid_search:360 - [('Phase III subject mean', 1.182), ('Phase III trial length', 2.192), ('Number of Organizations', 1.139)]
+2019-03-20 15:22:49.602 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.615
+2019-03-20 15:22:49.603 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:23:26.861 | INFO     | __main__:run_all_model_class_models:13 - Working Phase 1 - logistic_regression
+2019-03-20 15:23:27.098 | INFO     | models.model_classification:grid_search:353 - CV score 0.660587017415662
+2019-03-20 15:23:27.100 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.016681005372000592, 'logistic__penalty': 'l2'}
+2019-03-20 15:23:27.102 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:23:27.104 | INFO     | models.model_classification:grid_search:360 - [('Phase I subject mean', 0.737), ('Phase I trial length', 0.829), ('Number of Organizations', 1.188)]
+2019-03-20 15:23:27.107 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.696
+2019-03-20 15:23:27.108 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:23:27.109 | INFO     | __main__:run_all_model_class_models:13 - Working Phase 2 - logistic_regression
+2019-03-20 15:23:27.326 | INFO     | models.model_classification:grid_search:353 - CV score 0.7133308975764219
+2019-03-20 15:23:27.327 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.7742636826811278, 'logistic__penalty': 'l2'}
+2019-03-20 15:23:27.328 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:23:27.328 | INFO     | models.model_classification:grid_search:360 - [('Phase II subject mean', 0.839), ('Phase II trial length', 1.283), ('Number of Organizations', 2.088)]
+2019-03-20 15:23:27.331 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.276
+2019-03-20 15:23:27.332 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:23:27.333 | INFO     | __main__:run_all_model_class_models:13 - Working Phase 3 - logistic_regression
+2019-03-20 15:23:27.576 | INFO     | models.model_classification:grid_search:353 - CV score 0.9013080014614541
+2019-03-20 15:23:27.577 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
+2019-03-20 15:23:27.578 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:23:27.578 | INFO     | models.model_classification:grid_search:360 - [('Phase III subject mean', 1.182), ('Phase III trial length', 2.192), ('Number of Organizations', 1.139)]
+2019-03-20 15:23:27.581 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.615
+2019-03-20 15:23:27.582 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:24:26.577 | INFO     | __main__:run_all_model_class_models:13 - Working Phase I - logistic_regression
+2019-03-20 15:25:04.407 | INFO     | __main__:run_all_model_class_models:13 - Working Phase I - logistic_regression
+2019-03-20 15:25:13.963 | INFO     | __main__:run_all_model_class_models:13 - Working Phase I - logistic_regression
+2019-03-20 15:25:14.192 | INFO     | models.model_classification:grid_search:353 - CV score 0.660587017415662
+2019-03-20 15:25:14.194 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.016681005372000592, 'logistic__penalty': 'l2'}
+2019-03-20 15:25:14.195 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:25:14.197 | INFO     | models.model_classification:grid_search:360 - [('Phase I subject mean', 0.737), ('Phase I trial length', 0.829), ('Number of Organizations', 1.188)]
+2019-03-20 15:25:14.201 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.696
+2019-03-20 15:25:14.202 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:25:14.203 | INFO     | __main__:run_all_model_class_models:13 - Working Phase II - logistic_regression
+2019-03-20 15:25:14.494 | INFO     | models.model_classification:grid_search:353 - CV score 0.7133308975764219
+2019-03-20 15:25:14.496 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.7742636826811278, 'logistic__penalty': 'l2'}
+2019-03-20 15:25:14.497 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:25:14.498 | INFO     | models.model_classification:grid_search:360 - [('Phase II subject mean', 0.839), ('Phase II trial length', 1.283), ('Number of Organizations', 2.088)]
+2019-03-20 15:25:14.501 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.276
+2019-03-20 15:25:14.503 | INFO     | models.model_classification:predict_test:369 - -------------------------------
+2019-03-20 15:25:14.505 | INFO     | __main__:run_all_model_class_models:13 - Working Phase III - logistic_regression
+2019-03-20 15:25:14.774 | INFO     | models.model_classification:grid_search:353 - CV score 0.9013080014614541
+2019-03-20 15:25:14.775 | INFO     | models.model_classification:grid_search:354 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
+2019-03-20 15:25:14.776 | INFO     | models.model_classification:grid_search:359 - Odds coefficients
+2019-03-20 15:25:14.777 | INFO     | models.model_classification:grid_search:360 - [('Phase III subject mean', 1.182), ('Phase III trial length', 2.192), ('Number of Organizations', 1.139)]
+2019-03-20 15:25:14.781 | INFO     | models.model_classification:predict_test:368 - Precision Test Score: 0.615
+2019-03-20 15:25:14.781 | INFO     | models.model_classification:predict_test:369 - -------------------------------
