@@ -192,6 +192,10 @@ def feature_orangization_count(df_trials,df_data):
 def extract_feature_trial_status(df_trials, df_data):
     '''
     Assumes df_data already exist with a table on the unique drug names in the index
+
+    This takes in df_trials and df_data, extracts out the counts of each trial status
+    per drug and returns each of those status values as a column and merges to the df_data
+    dataframe.
     '''
 
     #collapse all potential unique trial status down to just Completed, Discontinued
@@ -203,11 +207,12 @@ def extract_feature_trial_status(df_trials, df_data):
 
     status_groups = df_trials.groupby(["Primary Drugs", "Trial Status"])["Trial Status"].agg('count')
     status_groups = status_groups.rename('Trial_Status_Count').reset_index() #couldn't reset index without renaming
+    status_groups.head()
     pivoted_status_groups = status_groups.pivot("Primary Drugs","Trial Status", "Trial_Status_Count")
     pivoted_status_groups = pivoted_status_groups.fillna(0)
     df_data = df_data.merge(pivoted_status_groups, left_index=True, right_index=True, how='left')
 
-    return df_data #change this when done w/ function
+    return df_data
 
 
 
