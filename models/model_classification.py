@@ -40,14 +40,16 @@ class ClassificationModel():
             'random_forest':self.random_forest_model,
             'xgboost':self.xgboost_model,
             }
-        model_dict[model_type]()
-        #Load this model
-        # try:
-        #     model_dict[model_type]()
-        # except:
-        #     print('Please enter in a valid model type')
-        #     return
 
+        #Load this model
+        try:
+            model_dict[model_type]()
+        except:
+            print('Please enter in a valid model type')
+            return
+
+        # Runs the script
+        self.wrapper()
 
 
     def wrapper(self):
@@ -345,8 +347,15 @@ class ClassificationModel():
         print(f"Best parameters: {self.model_gscv.best_params_}")
 
         if self.model_type=='logistic_regression':
-            LR_coef = np.exp(self.model_gscv.best_estimator_.steps[1][1].coef_)
-            print(f'Odds coefficients: {LR_coef[0]}')
+            LR_coef = np.exp(self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
+
+            #print()
+
+            features = model.X_train.columns.tolist()
+            print(f'Odds coefficients')
+            print(list(zip(features,LR_coef)))
+
+            #print(f'Odds coefficients: {LR_coef[0]}')
 
 #     def predict_test(self):
 #
@@ -364,6 +373,6 @@ class ClassificationModel():
 if __name__ == '__main__':
     df_data = pd.read_pickle('data/df_phaseIfeatures_Phase III .pk')
     model = ClassificationModel(df_data=df_data,model_type='logistic_regression')
-    model.wrapper()
+    #model.wrapper()
 
     #model.model_gscv.best_estimator_.steps[1][1].coef_
