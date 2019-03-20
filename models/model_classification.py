@@ -9,7 +9,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import classification_report
+from sklearn.metrics import precision_score
 
 # ML Models
 from sklearn.pipeline import Pipeline
@@ -70,7 +70,7 @@ class ClassificationModel():
         Special feature adjuster to change delta time object to a float
         applies the timedelta_change definition
         '''
-        label_col_name = df_data.filter(regex='trial length').columns[0]
+        label_col_name = self.df_data.filter(regex='trial length').columns[0]
         self.df_data[label_col_name] = self.df_data[label_col_name].apply(self.timedelta_change)
         self.df_data.fillna(0,inplace=True)
 
@@ -96,7 +96,7 @@ class ClassificationModel():
         label_col_name = self.df_data.filter(regex='Pass').columns[0]
 
         # Change data type to all floats
-        self.df_data = df_data.astype(dtype='float')
+        self.df_data = self.df_data.astype(dtype='float')
 
         # Define train and test data
         X = self.df_data.drop(label_col_name,axis=1)
@@ -119,7 +119,8 @@ class ClassificationModel():
         self.model = LogisticRegression(
             solver='liblinear',
             random_state=42,
-            class_weight='balanced')
+            class_weight='balanced'
+            )
 
         # Builds pipe. Apply a standard scaler to features
         self.pipe = Pipeline(
@@ -352,9 +353,9 @@ class ClassificationModel():
 
             #print()
 
-            features = model.X_train.columns.tolist()
+            features = self.X_train.columns.tolist()
             print(f'Odds coefficients')
-            print(list(zip(features,LR_coef)))
+            print(list(zip(features,np.round(LR_coef,3))))
 
             #print(f'Odds coefficients: {LR_coef[0]}')
 
@@ -363,9 +364,9 @@ class ClassificationModel():
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
 
-        report = classification_report(y_true=self.y_test, y_pred=self.y_pred)
-        print()
-        print(report)
+        self.score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
+        print(f'Precision Score: {np.round(self.score,3)}')
+        #print(report)
 #
 # sum(y_test==0)/len(y_test)
 # sum(y_pred==0)/len(y_pred)
@@ -373,8 +374,28 @@ class ClassificationModel():
 
 
 if __name__ == '__main__':
-    df_data = pd.read_pickle('data/df_phaseIfeatures_Phase III .pk')
-    model = ClassificationModel(df_data=df_data,model_type='logistic_regression')
-    #model.wrapper()
+    df_data1 = pd.read_pickle('data/df_0.pk')
+    model1 = ClassificationModel(df_data=df_data1,model_type='logistic_regression')
 
-    #model.model_gscv.best_estimator_.steps[1][1].coef_
+    df_data2 = pd.read_pickle('data/df_1.pk')
+    model2 = ClassificationModel(df_data=df_data2,model_type='logistic_regression')
+
+    df_data3 = pd.read_pickle('data/df_2.pk')
+    model3 = ClassificationModel(df_data=df_data3,model_type='logistic_regression')
+
+model.y_test[model.y_test==1]
+
+drugs = pd.Series(data = model.y_pred, index= model.y_test.index)
+
+drugs[drugs == 1]
+
+model.df_data.loc[['Tamoxifen','Letrozole','Docetaxel'],:]
+
+
+model.df_data.loc[['Goserelin','Everolimus','Megestrol'],:]
+
+
+model.df_data.describe()
+
+model.y_pred[model.y_pred==1]
+model.y_pred

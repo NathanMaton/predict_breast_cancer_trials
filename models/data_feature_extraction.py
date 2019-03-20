@@ -8,7 +8,10 @@ from fuzzywuzzy import fuzz, process
 def strip_planned_start(x):
     date_str = re.findall("[\d\s\w]*", x["Trial Initiation date"])[0].strip()
     plan_str = re.findall("planned", x["Trial Initiation date"])
-    if plan_str:
+    # If you want to included planned trials
+    #if (plan_str and not date_str):
+    if (plan_str):
+
         return 0
     else:
         return pd.to_datetime(date_str)
@@ -16,19 +19,28 @@ def strip_planned_start(x):
 def strip_planned_end(x):
     date_str = re.findall("[\d\s\w]*", x["Trial End date"])[0].strip()
     plan_str = re.findall("planned", x["Trial End date"])
-    if plan_str:
+    # If you want to included planned trials
+    #if (plan_str and not date_str):
+
+    if (plan_str):
         return 0
     else:
         return pd.to_datetime(date_str)
 
+
 def load_data():
     trials = pd.read_excel("data/bcdrugsct.xlsx")
+    # trials.shape
     trials = trials[trials["Primary Drugs"].isna() == False]
+    # trials.shape
     trials["trial_start"] = trials.apply(strip_planned_start, axis=1)
+    # trials.shape
     trials["trial_end"] = trials.apply(strip_planned_end, axis=1)
+    # trials.shape
     start_mask = trials["trial_start"] != 0
     end_mask = trials["trial_end"] != 0
     trials = trials[(start_mask) & (end_mask)]
+    # trials.shape
 
     start_before_2019_mask = trials["trial_start"] < np.datetime64('2019-01-01')
     end_before_2019_mask = trials["trial_end"] < np.datetime64('2019-01-01')
@@ -267,10 +279,24 @@ def separate_phases_into_dfs(df_data):
     for i in phase_list:
         phase = df_data.filter(regex=i).reset_index()
         phase["Number of Organizations"] = pd.Series(data = df_data["Number of Organizations"].values)
+        # phase["Completed"] = pd.Series(data = df_data["Completed"].values)
+        # phase["Discontinued"] = pd.Series(data = df_data["Discontinued"].values)
+        # phase["Completed"] = pd.Series(data = df_data["Completed"].values)
+        #
         phase.set_index("Primary Drugs", inplace=True)
         list_of_dfs.append(phase)
         phase.to_pickle('data/df_phaseIfeatures_'+i+'.pk')
     return list_of_dfs
+
+
+
+def save_data(df_data,list_of_dfs,date='SOMEDATE'):
+    # Saves data to csv for viewing
+    df_data.to_csv(f'{date}.csv')
+
+    for idx, item in enumerate(list_of_dfs):
+        item.to_pickle(f'df_{idx+1}.pk')
+
 
 if __name__ == '__main__':
 
@@ -280,15 +306,7 @@ if __name__ == '__main__':
     df_data = extract_feature_trial_status(df_trials=df_trials, df_data=df_data)
     df_data = feature_orangization_count(df_trials,df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
+    save_data(df_data,list_of_dfs,date='Mar20')
 
 
-df_data.to_csv('mar18.csv')
-
-
-#df_data.to_pickle('df_data_phase_I.pk')
-df_data['Number of Organizations']
-
-import pickle
-with open("list_of_df_phase_I.txt", "wb") as fp:   #Pickling
-    pickle.dump(list_of_dfs, fp)
-pickle.to_pickle(list_of_dfs)
+df_data.head()
