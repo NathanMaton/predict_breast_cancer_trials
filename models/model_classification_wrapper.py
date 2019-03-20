@@ -12,7 +12,7 @@ def run_all_model_class_models(models):
     models should be a list of model names availble
 
     Example = models = ['logistic_regression', 'gaussian_naive_bayes',\
-    'multinomial_naive_bayes','random_forest']
+    'multinomial_naive_bayes','random_forest','xgboost']
     '''
     phases = ['I','II','III']
 
@@ -26,7 +26,8 @@ def run_all_model_class_models(models):
                         )
             #time.sleep(1)
 if __name__ == '__main__':
-    models = ['logistic_regression']
+    models = ['logistic_regression', 'gaussian_naive_bayes',\
+    'multinomial_naive_bayes','random_forest','xgboost']
     # , 'gaussian_naive_bayes','multinomial_naive_bayes', \
     # 'random_forest']
     run_all_model_class_models(models)
