@@ -24,7 +24,7 @@ from loguru import logger
 
 
 # Start a log filter
-logger.add(f'logs/model_performance.log')
+#logger.add(f'logs/model_performance.log')
 
 
 class RegressionModel(ClassificationModel):

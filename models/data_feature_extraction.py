@@ -49,6 +49,7 @@ def load_data():
     if trials["Primary Drugs"].isna().sum() > 0:
         print("did not remove all na drug rows")
 
+
     return trials
 
 def remove_dup_trial():
@@ -75,9 +76,10 @@ def remove_dup_trial():
     df_trials = df_temp2.drop(dupes,axis=0)
 
     # Removes white space from drug names
-    df_trials["Primary Drugs"].apply(lambda x: x.strip())
+    df_trials["Primary Drugs"] = df_trials["Primary Drugs"].apply(lambda x: x.strip())
 
     return df_trials
+
 
 def feature_trial_design(df_trials, df_data):
     '''
@@ -85,11 +87,19 @@ def feature_trial_design(df_trials, df_data):
     the Trial Design column of df_trials and counts them per drug per
     phase
     '''
+
     df_temp = df_trials
     dupes = []
+    bad_cases = []
     df_temp = df_temp.reset_index() #not sure if this is needed but it works.
     for idx, item_list in enumerate(df_temp["Trial Design"]):
-        split_list = item_list.split(",")
+        try:
+            # Splits the string into tokenized words
+            split_list = item_list.split(",")
+        except:
+            # Case exist where value of the cell is nan
+            bad_cases.append(idx)
+            continue
         if len(split_list)>1:
             for i in split_list:
                 # Appends a new row to data for a unique design value
@@ -118,6 +128,9 @@ def feature_trial_design(df_trials, df_data):
     pivoted_status_groups = status_groups.pivot("Primary Drugs","Phase Design Type", "Trial_Design_Mean")
     pivoted_status_groups = pivoted_status_groups.fillna(0)
     df_data = df_data.merge(pivoted_status_groups, left_index=True, right_index=True, how='left')
+
+    print(f'skipped {len(bad_cases)} bad cases')
+    print(f'{bad_cases}')
     return df_data
 
 def drug_phase_df_template(df_trials):
@@ -364,7 +377,4 @@ if __name__ == '__main__':
     df_data = feature_orangization_count(df_trials,df_data)
     df_data = feature_trial_design(df_trials, df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
-    save_data(df_data,list_of_dfs,date='Mar20_v2')
-
-df_data.shape
-list_of_dfs[0].shape
+    save_data(df_data,list_of_dfs,date='Mar21')
