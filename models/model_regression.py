@@ -19,6 +19,14 @@ from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 from models.model_classification import ClassificationModel
 
+# import logger
+from loguru import logger
+
+
+# Start a log filter
+logger.add(f'logs/model_performance.log')
+
+
 class RegressionModel(ClassificationModel):
 
     # Initalizer / Instance Attributes
@@ -162,43 +170,44 @@ class RegressionModel(ClassificationModel):
             'ridge__normalize': [True, False],
             }
 
-    def grid_search(self,cv=5):
-
-
-        # Performs a grid search for the model
-        self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
-                              return_train_score=False)
-        self.model_gscv.fit(self.X_train, self.y_train)
-
-
-        print('Best model')
-        print(f"CV score {self.model_gscv.best_score_}")
-        print(f"Best parameters: {self.model_gscv.best_params_}")
-
-        if self.model_type=='logistic_regression':
-            LR_coef = np.exp(self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
-
-            #print()
-
-            features = self.X_train.columns.tolist()
-            print(f'Odds coefficients')
-            print(list(zip(features,np.round(LR_coef,3))))
-
-            #print(f'Odds coefficients: {LR_coef[0]}')
+    # def grid_search(self,cv=5):
+    #
+    #
+    #     # Performs a grid search for the model
+    #     self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
+    #                           return_train_score=False)
+    #     self.model_gscv.fit(self.X_train, self.y_train)
+    #
+    #
+    #     print('Best model')
+    #     print(f"CV score {self.model_gscv.best_score_}")
+    #     print(f"Best parameters: {self.model_gscv.best_params_}")
+    #
+    #     if self.model_type=='logistic_regression':
+    #         LR_coef = np.exp(self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
+    #
+    #         #print()
+    #
+    #         features = self.X_train.columns.tolist()
+    #         print(f'Odds coefficients')
+    #         print(list(zip(features,np.round(LR_coef,3))))
+    #
+    #         #print(f'Odds coefficients: {LR_coef[0]}')
 
     def predict_test(self):
 
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
         self.score = np.sqrt(mean_squared_error(y_true=self.y_test, y_pred=self.y_pred))
-        print(f'RMSE Score: {np.round(self.score,3)}')
-
+        logger.info(f'RMSE Score: {np.round(self.score,3)}')
+        logger.info(f'-------------------------------')
 if __name__ == '__main__':
-    df_data1 = pd.read_pickle('data/df_1.pk')
-    model1 = RegressionModel(df_data=df_data1,model_type='ridge')
-
-    df_data2 = pd.read_pickle('data/df_2.pk')
-    model2 = RegressionModel(df_data=df_data2,model_type='ridge')
-
-    df_data3 = pd.read_pickle('data/df_3.pk')
-    model3 = RegressionModel(df_data=df_data3,model_type='ridge')
+    print('Running regression model')
+    # df_data1 = pd.read_pickle('data/df_1.pk')
+    # model1 = RegressionModel(df_data=df_data1,model_type='ridge')
+    #
+    # df_data2 = pd.read_pickle('data/df_2.pk')
+    # model2 = RegressionModel(df_data=df_data2,model_type='ridge')
+    #
+    # df_data3 = pd.read_pickle('data/df_3.pk')
+    # model3 = RegressionModel(df_data=df_data3,model_type='ridge')
