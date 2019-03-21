@@ -17,7 +17,7 @@ def run_all_model_class_models(models):
     '''
     phases = ['I','II','III']
 
-    logger.add('***Classification Models***')
+    logger.info('***Classification Models***')
     for idx,phase in enumerate(phases):
         for model_type in models:
             logger.info(f'Working Phase {phase} - {model_type}')
@@ -36,7 +36,7 @@ def run_all_model_regress_models(models):
     'multinomial_naive_bayes','random_forest','xgboost']
     '''
     phases = ['I','II','III']
-    logger.add('***Regression Models***')
+    logger.info('***Regression Models***')
     for idx,phase in enumerate(phases):
         for model_type in models:
             logger.info(f'Working Phase {phase} - {model_type}')

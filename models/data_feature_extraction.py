@@ -251,10 +251,10 @@ def extract_feature_trial_status(df_trials, df_data):
     df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Recruiting","Other")
     df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Suspended","Other")
 
-    status_groups = df_trials.groupby(["Primary Drugs", "Trial Status"])["Trial Status"].agg('count')
+    status_groups = df_trials.groupby(["Primary Drugs", "Phase of Trial" ,"Trial Status"])["Trial Status"].agg('count')
     status_groups = status_groups.rename('Trial_Status_Count').reset_index() #couldn't reset index without renaming
-    status_groups.head()
-    pivoted_status_groups = status_groups.pivot("Primary Drugs","Trial Status", "Trial_Status_Count")
+    status_groups['Phase Trial Status'] = status_groups['Phase of Trial'] + ' '+ status_groups['Trial Status']
+    pivoted_status_groups = status_groups.pivot("Primary Drugs","Phase Trial Status", "Trial_Status_Count")
     pivoted_status_groups = pivoted_status_groups.fillna(0)
     df_data = df_data.merge(pivoted_status_groups, left_index=True, right_index=True, how='left')
 
@@ -279,16 +279,20 @@ def separate_phases_into_dfs(df_data):
     for i in phase_list:
         phase = df_data.filter(regex=i).reset_index()
         phase["Number of Organizations"] = pd.Series(data = df_data["Number of Organizations"].values)
-        # phase["Completed"] = pd.Series(data = df_data["Completed"].values)
-        # phase["Discontinued"] = pd.Series(data = df_data["Discontinued"].values)
-        # phase["Completed"] = pd.Series(data = df_data["Completed"].values)
-        #
         phase.set_index("Primary Drugs", inplace=True)
         list_of_dfs.append(phase)
         phase.to_pickle('data/df_phaseIfeatures_'+i+'.pk')
     return list_of_dfs
 
 
+
+
+
+
+def trial_center_detail_to_table(th):
+   rows = str.split(th, ';')
+   table = [str.split(row, '|') for row in rows]
+   return pd.DataFrame(table,columns=['Center name','city/state','Country'])
 
 def save_data(df_data,list_of_dfs,date='SOMEDATE'):
     # Saves data to csv for viewing
@@ -298,6 +302,8 @@ def save_data(df_data,list_of_dfs,date='SOMEDATE'):
         item.to_pickle(f'df_{idx+1}.pk')
 
 
+
+
 if __name__ == '__main__':
     df_trials = remove_dup_trial()
     df_data = df_feature_extraction_by_phase(df_trials=df_trials)
@@ -305,4 +311,4 @@ if __name__ == '__main__':
     df_data = extract_feature_trial_status(df_trials=df_trials, df_data=df_data)
     df_data = feature_orangization_count(df_trials,df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
-    save_data(df_data,list_of_dfs,date='Mar20')
+#    save_data(df_data,list_of_dfs,date='Mar20')
