@@ -22,6 +22,7 @@ def run_all_model_class_models(models):
         for model_type in models:
             logger.info(f'Working Phase {phase} - {model_type}')
             df_data = pd.read_pickle('data/df_'+str(idx+1)+'.pk')
+
             model = class_obj.ClassificationModel(
                         df_data=df_data,
                         model_type=model_type,
@@ -41,6 +42,7 @@ def run_all_model_regress_models(models):
         for model_type in models:
             logger.info(f'Working Phase {phase} - {model_type}')
             df_data = pd.read_pickle('data/df_'+str(idx+1)+'.pk')
+    
             model = reg_obj.RegressionModel(
                         df_data=df_data,
                         model_type=model_type,

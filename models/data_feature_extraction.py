@@ -56,10 +56,7 @@ def remove_dup_trial():
     Split out trials with multiple drugs into individual rows
     '''
     df_temp = load_data()
-    #c = unique_drugs(trials)
-    #df_data, exceptions = generate_drugs_df(c, trials)
     df_temp = df_temp.reset_index()
-
 
     ## expanded unique drugs to get a dataframe we can group by
     dupes = []
@@ -67,16 +64,61 @@ def remove_dup_trial():
         split_list = item_list.split(",")
         if len(split_list)>1:
             for i in split_list:
-                df_temp.append(df_temp.iloc[idx,:])
+                # Appends a new row to data for a unique design value
+                df_temp = df_temp.append(df_temp.iloc[idx,:])
+                # 3 is the column number of where Trial Design lives
+                # Changes the value of that specific cell to a single design value
                 df_temp.iloc[-1,-3]=i
             dupes.append(idx)
-
-    df_trials = df_temp.drop(dupes)
+    #we reset index so we can drop proper rows in next line
+    df_temp2 = df_temp.reset_index(drop=True)
+    df_trials = df_temp2.drop(dupes,axis=0)
 
     # Removes white space from drug names
     df_trials["Primary Drugs"].apply(lambda x: x.strip())
 
     return df_trials
+
+def feature_trial_design(df_trials, df_data):
+    '''
+    Takes df_trials and df_data, extracts out the unique values for
+    the Trial Design column of df_trials and counts them per drug per
+    phase
+    '''
+    df_temp = df_trials
+    dupes = []
+    df_temp = df_temp.reset_index() #not sure if this is needed but it works.
+    for idx, item_list in enumerate(df_temp["Trial Design"]):
+        split_list = item_list.split(",")
+        if len(split_list)>1:
+            for i in split_list:
+                # Appends a new row to data for a unique design value
+                df_temp = df_temp.append(df_temp.iloc[idx,:])
+                # 10 is the column number of where Trial Design lives
+                # Changes the value of that specific cell to a single design value
+                df_temp.iloc[-1,10]=i.strip()
+            dupes.append(idx)
+    #we reset index so we can drop proper rows in next line
+    df_temp = df_temp.reset_index(drop=True)
+    df_temp = df_temp.drop(dupes,axis=0)
+
+    #collapse all potential unique trial design values down to values with more than 20 counts
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("case control","Other Design Status")
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("survey","Other Design Status")
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("epidemiological","Other Design Status")
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("cross-sectional","Other Design Status")
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("postmarketing surveillance","Other Design Status")
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("sequential","Other Design Status")
+    df_temp["Trial Design"] = df_temp["Trial Design"].str.replace("single-blind","Other Design Status")
+
+    #using a pivot table to turn the unique values of trial design into columns by drugs
+    status_groups = df_temp.groupby(["Primary Drugs", "Phase of Trial" ,"Trial Design"])["Trial Design"].agg('count')
+    status_groups = status_groups.rename('Trial_Design_Mean').reset_index() #couldn't reset index without renaming
+    status_groups['Phase Design Type'] = status_groups['Phase of Trial'] + ' '+ status_groups['Trial Design']
+    pivoted_status_groups = status_groups.pivot("Primary Drugs","Phase Design Type", "Trial_Design_Mean")
+    pivoted_status_groups = pivoted_status_groups.fillna(0)
+    df_data = df_data.merge(pivoted_status_groups, left_index=True, right_index=True, how='left')
+    return df_data
 
 def drug_phase_df_template(df_trials):
     '''
@@ -142,6 +184,12 @@ def groupby_object_list(df_trials):
     # Phase names
     phase_of_trial_list = df_trials["Phase of Trial"].unique()
 
+    # Takes the number of centers per trial per phase and calculates the mean
+    df_trials["Number of Centers"] = df_trials["Trial Centre Details"].apply(trial_center_detail_to_table)
+    df_trials["Number of Centers"].fillna(df_trials["Number of Centers"].mean(),inplace=True)
+    groupby_center_count = df_trials.groupby(["Primary Drugs","Phase of Trial"])["Planned Subject Number"].agg('mean').reset_index()
+    name_center_mean=[i+' center count' for i in phase_of_trial_list]
+
     # Takes the number of subjects per trial per phase and calculates the mean
     groupby_patient_count = df_trials.groupby(["Primary Drugs","Phase of Trial"])["Planned Subject Number"].agg('mean').reset_index()
     name_subject_mean=[i+' subject mean' for i in phase_of_trial_list]
@@ -155,11 +203,10 @@ def groupby_object_list(df_trials):
     df_trials = df_trials[zero_time_delta_mask]
     groupby_time_deltas = pd.to_timedelta(df_trials.groupby(["Primary Drugs","Phase of Trial"])["nano_time_diff"].agg('mean')).reset_index()
 
-    groupby_object_list = [groupby_patient_count,groupby_time_deltas]
-
+    groupby_object_list = [groupby_patient_count,groupby_time_deltas,groupby_center_count]
     name_trial_length=[i+' trial length' for i in phase_of_trial_list]
 
-    name_column_adjust_list= [name_subject_mean, name_trial_length]
+    name_column_adjust_list= [name_subject_mean, name_trial_length,name_center_mean]
 
     return groupby_object_list, name_column_adjust_list
 
@@ -246,10 +293,10 @@ def extract_feature_trial_status(df_trials, df_data):
 
     #collapse all potential unique trial status down to just Completed, Discontinued
     #and other because the others are a small (32 of ~1450) set of the results currently
-    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Active, no longer recruiting","Other")
-    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Withdrawn prior to enrolment","Other")
-    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Recruiting","Other")
-    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Suspended","Other")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Active, no longer recruiting","Other Trial Status")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Withdrawn prior to enrolment","Other Trial Status")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Recruiting","Other Trial Status")
+    df_trials["Trial Status"] = df_trials["Trial Status"].str.replace("Suspended","Other Trial Status")
 
     status_groups = df_trials.groupby(["Primary Drugs", "Phase of Trial" ,"Trial Status"])["Trial Status"].agg('count')
     status_groups = status_groups.rename('Trial_Status_Count').reset_index() #couldn't reset index without renaming
@@ -285,14 +332,14 @@ def separate_phases_into_dfs(df_data):
     return list_of_dfs
 
 
+def trial_center_detail_to_table(x):
+    try:
+        rows = str.split(x, ';')
+        table = [str.split(row, '|') for row in rows]
+        return len(rows)
+    except:
+        return np.nan
 
-
-
-
-def trial_center_detail_to_table(th):
-   rows = str.split(th, ';')
-   table = [str.split(row, '|') for row in rows]
-   return pd.DataFrame(table,columns=['Center name','city/state','Country'])
 
 def save_data(df_data,list_of_dfs,date='SOMEDATE'):
     # Saves data to csv for viewing
@@ -301,7 +348,12 @@ def save_data(df_data,list_of_dfs,date='SOMEDATE'):
     for idx, item in enumerate(list_of_dfs):
         item.to_pickle(f'df_{idx+1}.pk')
 
-
+# messy_trial_design_list = df_trials["Trial Design"].values
+# messy_trial_design_list[0]
+# from collections import Counter
+# single_design_per_item_list = [design.strip() for row in messy_trial_design_list for design in row.split(",")]
+#
+# c = Counter(single_design_per_item_list)
 
 
 if __name__ == '__main__':
@@ -310,5 +362,9 @@ if __name__ == '__main__':
     df_data = feature_phase_pass_nopass(df_data)
     df_data = extract_feature_trial_status(df_trials=df_trials, df_data=df_data)
     df_data = feature_orangization_count(df_trials,df_data)
+    df_data = feature_trial_design(df_trials, df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
-#    save_data(df_data,list_of_dfs,date='Mar20')
+    save_data(df_data,list_of_dfs,date='Mar20_v2')
+
+df_data.shape
+list_of_dfs[0].shape
