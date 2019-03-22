@@ -1,7 +1,6 @@
 
 '''
 Script builds a regression model for a binary classification
-
 '''
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,6 +15,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 from sklearn import datasets, linear_model
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from xgboost.sklearn import XGBRegressor
+
 from sklearn.metrics import mean_squared_error, r2_score
 from codes.model_classification import ClassificationModel
 
@@ -44,6 +47,9 @@ class RegressionModel(ClassificationModel):
             'ols':self.ols,
             'lasso':self.lasso,
             'ridge':self.ridge,
+            'rfregression':self.rfregression,
+            'gbreg':self.gbreg,
+            'xgbreg':self.xgbreg,
         }
 
         #Load this model
@@ -170,29 +176,87 @@ class RegressionModel(ClassificationModel):
             'ridge__normalize': [True, False],
             }
 
-    # def grid_search(self,cv=5):
-    #
-    #
-    #     # Performs a grid search for the model
-    #     self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
-    #                           return_train_score=False)
-    #     self.model_gscv.fit(self.X_train, self.y_train)
-    #
-    #
-    #     print('Best model')
-    #     print(f"CV score {self.model_gscv.best_score_}")
-    #     print(f"Best parameters: {self.model_gscv.best_params_}")
-    #
-    #     if self.model_type=='logistic_regression':
-    #         LR_coef = np.exp(self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
-    #
-    #         #print()
-    #
-    #         features = self.X_train.columns.tolist()
-    #         print(f'Odds coefficients')
-    #         print(list(zip(features,np.round(LR_coef,3))))
-    #
-    #         #print(f'Odds coefficients: {LR_coef[0]}')
+    def rfregression(self):
+        '''
+        Build a rf regressor and defines
+        the grid search parameters space
+
+        '''
+        # LogisticRegression, balanced is used because classes are highly
+        # imbalanced
+        self.model = RandomForestRegressor(
+            max_depth=2,
+            n_estimators=100,
+            random_state=42,
+            )
+
+        # Builds pipe. Apply a standard scaler to features
+        self.pipe = Pipeline(
+                    steps=[
+                        ('scale', StandardScaler()),
+                        ('rfregression', self.model)
+                    ])
+
+        # Parameters of pipelines can be set using ‘__’ separated parameter names:
+        self.param_grid = {
+            'rfregression__max_depth': [2,4,6,8,10,20],
+            'rfregression__n_estimators': [100,500,1000],
+            }
+
+    def gbreg(self):
+        '''
+        Build a xg regressor and defines
+        the grid search parameters space
+        '''
+        # LogisticRegression, balanced is used because classes are highly
+        # imbalanced
+        self.model = GradientBoostingRegressor(
+            loss='huber',
+            learning_rate=.1,
+            n_estimators=100,
+            random_state=42,
+            )
+
+        # Builds pipe. Apply a standard scaler to features
+        self.pipe = Pipeline(
+                    steps=[
+                        ('scale', StandardScaler()),
+                        ('xgreg', self.model)
+                    ])
+
+        # Parameters of pipelines can be set using ‘__’ separated parameter names:
+        self.param_grid = {
+            'gbreg__loss': ['huber'],
+            'gbreg__learning_rate':[.1],
+            'gbreg__n_estimators': [100],
+            }
+
+    def xgbreg(self):
+        '''
+        Build a xg regressor and defines
+        the grid search parameters space
+        '''
+        # LogisticRegression, balanced is used because classes are highly
+        # imbalanced
+        self.model = XGBRegressor(
+            max_depth=5,
+            learning_rate=.1,
+            n_estimators=100,
+            random_state=42,
+            )
+
+        # Builds pipe. Apply a standard scaler to features
+        self.pipe = Pipeline(
+                    steps=[
+                        ('scale', StandardScaler()),
+                        ('xgbreg', self.model)
+                    ])
+
+        # Parameters of pipelines can be set using ‘__’ separated parameter names:
+        self.param_grid = {
+            'xgbreg__learning_rate':[.1],
+            'xgbreg__n_estimators': [100],
+            }
 
     def predict_test(self):
 
@@ -204,7 +268,7 @@ class RegressionModel(ClassificationModel):
 if __name__ == '__main__':
     print('Running regression model')
     # df_data1 = pd.read_pickle('data/df_1.pk')
-    # model1 = RegressionModel(df_data=df_data1,model_type='ridge')
+    # model1 = RegressionModel(df_data=df_data1,model_type='xgbreg')
     #
     # df_data2 = pd.read_pickle('data/df_2.pk')
     # model2 = RegressionModel(df_data=df_data2,model_type='ridge')

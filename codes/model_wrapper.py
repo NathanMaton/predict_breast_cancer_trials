@@ -58,6 +58,7 @@ def main():
     run_all_model_class_models(class_models)
     logger.info('Classication models complete!')
 
-    reg_models = ['ols', 'lasso','ridge']
+    reg_models = ['rfregression', 'gbreg','xgbreg']
+    #reg_models = ['ols', 'lasso','ridge']
     run_all_model_regress_models(reg_models)
     logger.info('Regression models complete!')
