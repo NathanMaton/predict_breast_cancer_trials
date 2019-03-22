@@ -12,4 +12,4 @@ if __name__ == '__main__':
     # Runs the model wrapper that will run each of the classification model
     logger.info('Started Model Wrapper')
     model_wrapper.main()
-    logger.info('Completed Started Model Wrapper')
+    logger.info('Completed Model Wrapper')
