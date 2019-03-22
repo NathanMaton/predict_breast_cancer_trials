@@ -359,7 +359,7 @@ def save_data(df_data,list_of_dfs,date='SOMEDATE'):
     df_data.to_csv(f'{date}.csv')
 
     for idx, item in enumerate(list_of_dfs):
-        item.to_pickle(f'df_{idx+1}.pk')
+        item.to_pickle(f'data/df_{idx+1}.pk')
 
 # messy_trial_design_list = df_trials["Trial Design"].values
 # messy_trial_design_list[0]
@@ -369,7 +369,8 @@ def save_data(df_data,list_of_dfs,date='SOMEDATE'):
 # c = Counter(single_design_per_item_list)
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
+def main():
     df_trials = remove_dup_trial()
     df_data = df_feature_extraction_by_phase(df_trials=df_trials)
     df_data = feature_phase_pass_nopass(df_data)
@@ -378,3 +379,4 @@ if __name__ == '__main__':
     df_data = feature_trial_design(df_trials, df_data)
     list_of_dfs = separate_phases_into_dfs(df_data)
     save_data(df_data,list_of_dfs,date='Mar21')
+    print('Feature Extraction Complete!')

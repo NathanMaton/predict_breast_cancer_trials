@@ -17,7 +17,7 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-from models.model_classification import ClassificationModel
+from codes.model_classification import ClassificationModel
 
 # import logger
 from loguru import logger

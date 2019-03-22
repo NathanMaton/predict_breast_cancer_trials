@@ -1,11 +1,10 @@
-import models.model_classification as class_obj
-import models.model_regression as reg_obj
+import codes.model_classification as class_obj
+import codes.model_regression as reg_obj
 import pandas as pd
 import time
 from loguru import logger
 
-# Start a log filter
-logger.add(f'logs/model_performance.log')
+
 
 def run_all_model_class_models(models):
     '''
@@ -48,10 +47,17 @@ def run_all_model_regress_models(models):
                         model_type=model_type,
                         )
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+def main():
+
+    # Start a log filter
+    logger.add(f'logs/model_performance.log')
+    
     class_models = ['logistic_regression', 'gaussian_naive_bayes',\
     'multinomial_naive_bayes','random_forest','xgboost']
     run_all_model_class_models(class_models)
+    logger.info('Classication models complete!')
 
     reg_models = ['ols', 'lasso','ridge']
     run_all_model_regress_models(reg_models)
+    logger.info('Regression models complete!')
