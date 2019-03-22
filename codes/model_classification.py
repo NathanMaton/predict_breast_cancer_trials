@@ -187,14 +187,15 @@ class ClassificationModel():
 
         # Hyperparameter space for RF
         # Number of trees in random forest
-        n_estimators = n_estimators = np.arange(start=1, stop=4, step=1)
+        n_estimators = n_estimators = np.arange([20,40,60,80,100,500])
         # Maximum number of levels in tree
         max_depth = [int(x) for x in np.linspace(10, 20, num=11)]
         max_depth = np.array(max_depth)
         # Minimum number of samples required to split a node
         min_samples_split = np.array([2, 5, 10])
         # Minimum number of samples required at each leaf node
-        min_samples_leaf = np.array([1, 2, 4])
+        min_samples_leaf = np.array([2,4,6,8,10])
+
 
 
         # Create the random grid
@@ -217,30 +218,31 @@ class ClassificationModel():
                             ('XGB', self.model)
                             ])
 
-            # self.param_grid = {
-            #                'XGB__colsample_bytree':np.arange(start=.4,stop=.9,step=.1),
-            #                'XGB__gamma': np.arange(start=0,stop=10,step=1),
-            #                'XGB__min_child_weight':[1.5],
-            #                'XGB__learning_rate':np.arange(start=.01,stop=.08,step=.02),
-            #                'XGB__max_depth':np.arange(start=2,stop=5,step=1),
-            #                'XGB__n_estimators':[1000,5000,10000],
-            #                'XGB__reg_alpha':[1e-2],
-            #                'XGB__reg_lambda':[1e-2],
-            #                'XGB__subsample':np.arange(start=.6,stop=.8,step=.1),
-            #                'XGB__scale_pos_weight':[1,5,9,11]
-            #                }
             self.param_grid = {
-                           'XGB__colsample_bytree':[.1],
-                           'XGB__gamma': [4],
+                           'XGB__colsample_bytree':np.arange(start=.4,stop=.9,step=.1),
+                           'XGB__gamma': np.arange(start=0,stop=10,step=1),
                            'XGB__min_child_weight':[1.5],
-                           'XGB__learning_rate':[.2],
-                           'XGB__max_depth':[3],
-                           'XGB__n_estimators':[100],
+                           'XGB__learning_rate':np.arange(start=.01,stop=.08,step=.02),
+                           'XGB__max_depth':np.arange(start=2,stop=5,step=1),
+                           'XGB__n_estimators':[1000,5000,10000],
                            'XGB__reg_alpha':[1e-2],
                            'XGB__reg_lambda':[1e-2],
-                           'XGB__subsample':[.5],
-                           'XGB__scale_pos_weight':[9]
+                           'XGB__subsample':np.arange(start=.6,stop=.8,step=.1),
+                           'XGB__scale_pos_weight':[1,5,9,11]
                            }
+            # Test parameters
+            # self.param_grid = {
+            #                'XGB__colsample_bytree':[.1],
+            #                'XGB__gamma': [4],
+            #                'XGB__min_child_weight':[1.5],
+            #                'XGB__learning_rate':[.2],
+            #                'XGB__max_depth':[3],
+            #                'XGB__n_estimators':[100],
+            #                'XGB__reg_alpha':[1e-2],
+            #                'XGB__reg_lambda':[1e-2],
+            #                'XGB__subsample':[.5],
+            #                'XGB__scale_pos_weight':[9]
+            #                }
 
     def grid_search(self,cv=5):
 

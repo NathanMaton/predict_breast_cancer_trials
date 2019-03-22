@@ -1,5 +1,6 @@
 import pandas as pd
 from collections import Counter
+#from models.helper import load_data,pipeline, unique_drugs, generate_drugs_df
 import re
 import numpy as np
 from fuzzywuzzy import fuzz, process
@@ -359,14 +360,6 @@ def save_data(df_data,list_of_dfs,date='SOMEDATE'):
 
     for idx, item in enumerate(list_of_dfs):
         item.to_pickle(f'data/df_{idx+1}.pk')
-
-# messy_trial_design_list = df_trials["Trial Design"].values
-# messy_trial_design_list[0]
-# from collections import Counter
-# single_design_per_item_list = [design.strip() for row in messy_trial_design_list for design in row.split(",")]
-#
-# c = Counter(single_design_per_item_list)
-
 
 #if __name__ == '__main__':
 def main():

@@ -16,7 +16,7 @@ def run_all_model_class_models(models):
     '''
     phases = ['I','II','III']
 
-    logger.info('***Classification Models***')
+    logger.info('*****Classification Models*****')
     for idx,phase in enumerate(phases):
         for model_type in models:
             logger.info(f'Working Phase {phase} - {model_type}')
@@ -36,7 +36,7 @@ def run_all_model_regress_models(models):
     'multinomial_naive_bayes','random_forest','xgboost']
     '''
     phases = ['I','II','III']
-    logger.info('***Regression Models***')
+    logger.info('*****Regression Models*****')
     for idx,phase in enumerate(phases):
         for model_type in models:
             logger.info(f'Working Phase {phase} - {model_type}')
@@ -50,15 +50,15 @@ def run_all_model_regress_models(models):
 # if __name__ == '__main__':
 def main():
 
-    # Start a log filter
-    logger.add(f'logs/model_performance.log')
-    
+    # # Start a log filter
+    # logger.add(f'logs/model_performance.log')
+
     class_models = ['logistic_regression', 'gaussian_naive_bayes',\
     'multinomial_naive_bayes','random_forest','xgboost']
     run_all_model_class_models(class_models)
     logger.info('Classication models complete!')
 
-    reg_models = ['rfregression', 'gbreg','xgbreg']
+    reg_models = ['ols', 'lasso','ridge','rfregression', 'gbreg','xgbreg']
     #reg_models = ['ols', 'lasso','ridge']
     run_all_model_regress_models(reg_models)
     logger.info('Regression models complete!')
