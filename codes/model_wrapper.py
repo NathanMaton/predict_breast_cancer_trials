@@ -50,11 +50,9 @@ def run_all_model_regress_models(models):
 # if __name__ == '__main__':
 def main():
 
-    # # Start a log filter
-    # logger.add(f'logs/model_performance.log')
-
     class_models = ['logistic_regression', 'gaussian_naive_bayes',\
     'multinomial_naive_bayes','random_forest','xgboost']
+    
     run_all_model_class_models(class_models)
     logger.info('Classication models complete!')
 

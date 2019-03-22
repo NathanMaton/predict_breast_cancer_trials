@@ -54,6 +54,7 @@ class ClassificationModel():
             #logger.info(f'Running: {model_type}')
         except:
             print('Please enter in a valid model type')
+            raise
             return
 
         # Runs the script
@@ -187,7 +188,7 @@ class ClassificationModel():
 
         # Hyperparameter space for RF
         # Number of trees in random forest
-        n_estimators = n_estimators = np.arange([20,40,60,80,100,500])
+        n_estimators = [20,40,60,80,100,500]
         # Maximum number of levels in tree
         max_depth = [int(x) for x in np.linspace(10, 20, num=11)]
         max_depth = np.array(max_depth)
@@ -248,7 +249,7 @@ class ClassificationModel():
 
         # Performs a grid search for the model
         self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
-                              return_train_score=False)
+                              return_train_score=False,verbose=5,n_jobs=1)
         self.model_gscv.fit(self.X_train, self.y_train)
 
         logger.info(f"CV score {self.model_gscv.best_score_}")
