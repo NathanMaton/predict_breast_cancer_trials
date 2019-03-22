@@ -272,7 +272,7 @@ class RegressionModel(ClassificationModel):
         self.score = np.sqrt(mean_squared_error(y_true=self.y_test, y_pred=self.y_pred))
         logger.info(f'RMSE Score: {np.round(self.score,3)}')
         logger.info(f'-------------------------------')
-        
+
 if __name__ == '__main__':
     print('Running regression model')
     # df_data1 = pd.read_pickle('data/df_1.pk')
