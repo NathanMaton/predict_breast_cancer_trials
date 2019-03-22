@@ -53,5 +53,6 @@ if __name__ == '__main__':
     'multinomial_naive_bayes','random_forest','xgboost']
     run_all_model_class_models(class_models)
 
-    reg_models = ['ols', 'lasso','ridge']
+    reg_models = ['rfregression', 'gbreg','xgbreg']
+    #reg_models = ['ols', 'lasso','ridge']
     run_all_model_regress_models(reg_models)

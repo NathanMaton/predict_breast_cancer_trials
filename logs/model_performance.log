@@ -1,0 +1,413 @@
+2019-03-21 13:57:49.167 | INFO     | __main__:run_all_model_class_models:11 - ***Classification Models***
+2019-03-21 13:57:49.169 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - logistic_regression
+2019-03-21 13:57:49.648 | INFO     | models.model_classification:grid_search:252 - CV score 0.6331526648599819
+2019-03-21 13:57:49.649 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 0.004641588833612782, 'logistic__penalty': 'l2'}
+2019-03-21 13:57:49.651 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 13:57:49.653 | INFO     | models.model_classification:grid_search:259 - [('Phase I subject mean', 0.878), ('Phase I trial length', 0.943), ('Phase I center count', 0.878), ('Phase I Completed', 1.048), ('Phase I Discontinued', 1.009), ('Phase I Other Trial Status', 1.013), ('Phase I Other Design Status', 1.015), ('Phase I cohort', 0.995), ('Phase I crossover', 1.02), ('Phase I double-blind', 1.011), ('Phase I multicentre', 1.018), ('Phase I observational', 0.987), ('Phase I open', 1.041), ('Phase I parallel', 1.024), ('Phase I prospective', 1.051), ('Phase I randomised', 1.034), ('Number of Organizations', 1.122)]
+2019-03-21 13:57:49.659 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.685
+2019-03-21 13:57:49.660 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:57:49.661 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - gaussian_naive_bayes
+2019-03-21 13:57:49.728 | INFO     | models.model_classification:grid_search:252 - CV score 0.5427883167720566
+2019-03-21 13:57:49.729 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 13:57:49.735 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.643
+2019-03-21 13:57:49.736 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:57:49.738 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - multinomial_naive_bayes
+2019-03-21 13:57:49.799 | INFO     | models.model_classification:grid_search:252 - CV score 0.6136103583258055
+2019-03-21 13:57:49.801 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 13:57:49.805 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.662
+2019-03-21 13:57:49.806 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:57:49.807 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - random_forest
+2019-03-21 13:58:00.260 | INFO     | models.model_classification:grid_search:252 - CV score 0.6746461909063536
+2019-03-21 13:58:00.261 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 10, 'RF__min_samples_leaf': 4, 'RF__min_samples_split': 2, 'RF__n_estimators': 3}
+2019-03-21 13:58:00.268 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.746
+2019-03-21 13:58:00.270 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:00.272 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - xgboost
+2019-03-21 13:58:00.509 | INFO     | models.model_classification:grid_search:252 - CV score 0.5769647696476964
+2019-03-21 13:58:00.510 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 13:58:00.516 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.56
+2019-03-21 13:58:00.517 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:00.518 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - logistic_regression
+2019-03-21 13:58:00.880 | INFO     | models.model_classification:grid_search:252 - CV score 0.8580548027702498
+2019-03-21 13:58:00.881 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
+2019-03-21 13:58:00.883 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 13:58:00.884 | INFO     | models.model_classification:grid_search:259 - [('Phase II subject mean', 0.818), ('Phase II trial length', 1.001), ('Phase II center count', 0.818), ('Phase II Completed', 1.976), ('Phase II Discontinued', 0.637), ('Phase II Other Trial Status', 1.382), ('Phase II Other Design Status', 1.392), ('Phase II cohort', 1.276), ('Phase II crossover', 1.174), ('Phase II double-blind', 1.107), ('Phase II multicentre', 1.301), ('Phase II observational', 1.54), ('Phase II open', 1.467), ('Phase II parallel', 0.822), ('Phase II prospective', 1.515), ('Phase II randomised', 1.295), ('Phase II retrospective', 0.936), ('Number of Organizations', 1.991)]
+2019-03-21 13:58:00.889 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.478
+2019-03-21 13:58:00.890 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:00.893 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - gaussian_naive_bayes
+2019-03-21 13:58:00.942 | INFO     | models.model_classification:grid_search:252 - CV score 0.887473652514303
+2019-03-21 13:58:00.944 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 13:58:00.949 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.611
+2019-03-21 13:58:00.950 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:00.951 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - multinomial_naive_bayes
+2019-03-21 13:58:00.990 | INFO     | models.model_classification:grid_search:252 - CV score 0.885034628124059
+2019-03-21 13:58:00.992 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 13:58:00.996 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.778
+2019-03-21 13:58:00.997 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:00.998 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - random_forest
+2019-03-21 13:58:11.498 | INFO     | models.model_classification:grid_search:252 - CV score 0.8875940981632038
+2019-03-21 13:58:11.500 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 11, 'RF__min_samples_leaf': 1, 'RF__min_samples_split': 2, 'RF__n_estimators': 2}
+2019-03-21 13:58:11.505 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.833
+2019-03-21 13:58:11.507 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:11.508 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - xgboost
+2019-03-21 13:58:11.718 | INFO     | models.model_classification:grid_search:252 - CV score 0.8166214995483287
+2019-03-21 13:58:11.720 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 13:58:11.726 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.474
+2019-03-21 13:58:11.727 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:11.729 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - logistic_regression
+2019-03-21 13:58:12.104 | INFO     | models.model_classification:grid_search:252 - CV score 0.9168925022583558
+2019-03-21 13:58:12.106 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 10.0, 'logistic__penalty': 'l2'}
+2019-03-21 13:58:12.107 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 13:58:12.108 | INFO     | models.model_classification:grid_search:259 - [('Phase III subject mean', 1.743), ('Phase III trial length', 0.994), ('Phase III center count', 1.743), ('Phase III Completed', 1.383), ('Phase III Discontinued', 0.939), ('Phase III Other Trial Status', 1.205), ('Phase III Other Design Status', 0.964), ('Phase III cohort', 0.082), ('Phase III crossover', 1.206), ('Phase III double-blind', 1.268), ('Phase III multicentre', 0.541), ('Phase III observational', 3.219), ('Phase III open', 3.151), ('Phase III parallel', 22.645), ('Phase III prospective', 64.586), ('Phase III randomised', 0.003), ('Phase III retrospective', 1.137), ('Number of Organizations', 0.845)]
+2019-03-21 13:58:12.113 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 13:58:12.115 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:12.116 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - gaussian_naive_bayes
+2019-03-21 13:58:12.167 | INFO     | models.model_classification:grid_search:252 - CV score 0.9413429689852453
+2019-03-21 13:58:12.168 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 13:58:12.176 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.667
+2019-03-21 13:58:12.177 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:12.178 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - multinomial_naive_bayes
+2019-03-21 13:58:12.215 | INFO     | models.model_classification:grid_search:252 - CV score 0.9095754290876241
+2019-03-21 13:58:12.216 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 13:58:12.221 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.538
+2019-03-21 13:58:12.223 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:12.224 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - random_forest
+2019-03-21 13:58:22.119 | INFO     | models.model_classification:grid_search:252 - CV score 0.9486299307437518
+2019-03-21 13:58:22.120 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 10, 'RF__min_samples_leaf': 2, 'RF__min_samples_split': 5, 'RF__n_estimators': 3}
+2019-03-21 13:58:22.125 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 13:58:22.126 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:22.128 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - xgboost
+2019-03-21 13:58:22.341 | INFO     | models.model_classification:grid_search:252 - CV score 0.9412827461607949
+2019-03-21 13:58:22.342 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 13:58:22.347 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 13:58:22.349 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 13:58:22.364 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 13:58:22.366 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 13:59:13.284 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 13:59:13.294 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 13:59:54.182 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 13:59:54.191 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:00:09.313 | INFO     | __main__:run_all_model_class_models:11 - ***Classification Models***
+2019-03-21 14:00:09.313 | INFO     | __main__:run_all_model_class_models:11 - ***Classification Models***
+2019-03-21 14:00:09.323 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - logistic_regression
+2019-03-21 14:00:09.323 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - logistic_regression
+2019-03-21 14:00:09.675 | INFO     | models.model_classification:grid_search:252 - CV score 0.6331526648599819
+2019-03-21 14:00:09.675 | INFO     | models.model_classification:grid_search:252 - CV score 0.6331526648599819
+2019-03-21 14:00:09.677 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 0.004641588833612782, 'logistic__penalty': 'l2'}
+2019-03-21 14:00:09.677 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 0.004641588833612782, 'logistic__penalty': 'l2'}
+2019-03-21 14:00:09.679 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 14:00:09.679 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 14:00:09.681 | INFO     | models.model_classification:grid_search:259 - [('Phase I subject mean', 0.878), ('Phase I trial length', 0.943), ('Phase I center count', 0.878), ('Phase I Completed', 1.048), ('Phase I Discontinued', 1.009), ('Phase I Other Trial Status', 1.013), ('Phase I Other Design Status', 1.015), ('Phase I cohort', 0.995), ('Phase I crossover', 1.02), ('Phase I double-blind', 1.011), ('Phase I multicentre', 1.018), ('Phase I observational', 0.987), ('Phase I open', 1.041), ('Phase I parallel', 1.024), ('Phase I prospective', 1.051), ('Phase I randomised', 1.034), ('Number of Organizations', 1.122)]
+2019-03-21 14:00:09.681 | INFO     | models.model_classification:grid_search:259 - [('Phase I subject mean', 0.878), ('Phase I trial length', 0.943), ('Phase I center count', 0.878), ('Phase I Completed', 1.048), ('Phase I Discontinued', 1.009), ('Phase I Other Trial Status', 1.013), ('Phase I Other Design Status', 1.015), ('Phase I cohort', 0.995), ('Phase I crossover', 1.02), ('Phase I double-blind', 1.011), ('Phase I multicentre', 1.018), ('Phase I observational', 0.987), ('Phase I open', 1.041), ('Phase I parallel', 1.024), ('Phase I prospective', 1.051), ('Phase I randomised', 1.034), ('Number of Organizations', 1.122)]
+2019-03-21 14:00:09.686 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.685
+2019-03-21 14:00:09.686 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.685
+2019-03-21 14:00:09.688 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:09.688 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:09.691 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - gaussian_naive_bayes
+2019-03-21 14:00:09.691 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - gaussian_naive_bayes
+2019-03-21 14:00:09.748 | INFO     | models.model_classification:grid_search:252 - CV score 0.5427883167720566
+2019-03-21 14:00:09.748 | INFO     | models.model_classification:grid_search:252 - CV score 0.5427883167720566
+2019-03-21 14:00:09.750 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:09.750 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:09.760 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.643
+2019-03-21 14:00:09.760 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.643
+2019-03-21 14:00:09.763 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:09.763 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:09.766 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - multinomial_naive_bayes
+2019-03-21 14:00:09.766 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - multinomial_naive_bayes
+2019-03-21 14:00:09.821 | INFO     | models.model_classification:grid_search:252 - CV score 0.6136103583258055
+2019-03-21 14:00:09.821 | INFO     | models.model_classification:grid_search:252 - CV score 0.6136103583258055
+2019-03-21 14:00:09.824 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:09.824 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:09.831 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.662
+2019-03-21 14:00:09.831 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.662
+2019-03-21 14:00:09.833 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:09.833 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:09.836 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - random_forest
+2019-03-21 14:00:09.836 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - random_forest
+2019-03-21 14:00:20.308 | INFO     | models.model_classification:grid_search:252 - CV score 0.6746461909063536
+2019-03-21 14:00:20.308 | INFO     | models.model_classification:grid_search:252 - CV score 0.6746461909063536
+2019-03-21 14:00:20.319 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 10, 'RF__min_samples_leaf': 4, 'RF__min_samples_split': 2, 'RF__n_estimators': 3}
+2019-03-21 14:00:20.319 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 10, 'RF__min_samples_leaf': 4, 'RF__min_samples_split': 2, 'RF__n_estimators': 3}
+2019-03-21 14:00:20.324 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.746
+2019-03-21 14:00:20.324 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.746
+2019-03-21 14:00:20.326 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:20.326 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:20.327 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - xgboost
+2019-03-21 14:00:20.327 | INFO     | __main__:run_all_model_class_models:14 - Working Phase I - xgboost
+2019-03-21 14:00:20.534 | INFO     | models.model_classification:grid_search:252 - CV score 0.5769647696476964
+2019-03-21 14:00:20.534 | INFO     | models.model_classification:grid_search:252 - CV score 0.5769647696476964
+2019-03-21 14:00:20.536 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 14:00:20.536 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 14:00:20.540 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.56
+2019-03-21 14:00:20.540 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.56
+2019-03-21 14:00:20.541 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:20.541 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:20.543 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - logistic_regression
+2019-03-21 14:00:20.543 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - logistic_regression
+2019-03-21 14:00:20.935 | INFO     | models.model_classification:grid_search:252 - CV score 0.8580548027702498
+2019-03-21 14:00:20.935 | INFO     | models.model_classification:grid_search:252 - CV score 0.8580548027702498
+2019-03-21 14:00:20.937 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
+2019-03-21 14:00:20.937 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 0.21544346900318845, 'logistic__penalty': 'l2'}
+2019-03-21 14:00:20.939 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 14:00:20.939 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 14:00:20.941 | INFO     | models.model_classification:grid_search:259 - [('Phase II subject mean', 0.818), ('Phase II trial length', 1.001), ('Phase II center count', 0.818), ('Phase II Completed', 1.976), ('Phase II Discontinued', 0.637), ('Phase II Other Trial Status', 1.382), ('Phase II Other Design Status', 1.392), ('Phase II cohort', 1.276), ('Phase II crossover', 1.174), ('Phase II double-blind', 1.107), ('Phase II multicentre', 1.301), ('Phase II observational', 1.54), ('Phase II open', 1.467), ('Phase II parallel', 0.822), ('Phase II prospective', 1.515), ('Phase II randomised', 1.295), ('Phase II retrospective', 0.936), ('Number of Organizations', 1.991)]
+2019-03-21 14:00:20.941 | INFO     | models.model_classification:grid_search:259 - [('Phase II subject mean', 0.818), ('Phase II trial length', 1.001), ('Phase II center count', 0.818), ('Phase II Completed', 1.976), ('Phase II Discontinued', 0.637), ('Phase II Other Trial Status', 1.382), ('Phase II Other Design Status', 1.392), ('Phase II cohort', 1.276), ('Phase II crossover', 1.174), ('Phase II double-blind', 1.107), ('Phase II multicentre', 1.301), ('Phase II observational', 1.54), ('Phase II open', 1.467), ('Phase II parallel', 0.822), ('Phase II prospective', 1.515), ('Phase II randomised', 1.295), ('Phase II retrospective', 0.936), ('Number of Organizations', 1.991)]
+2019-03-21 14:00:20.947 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.478
+2019-03-21 14:00:20.947 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.478
+2019-03-21 14:00:20.949 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:20.949 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:20.951 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - gaussian_naive_bayes
+2019-03-21 14:00:20.951 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - gaussian_naive_bayes
+2019-03-21 14:00:20.999 | INFO     | models.model_classification:grid_search:252 - CV score 0.887473652514303
+2019-03-21 14:00:20.999 | INFO     | models.model_classification:grid_search:252 - CV score 0.887473652514303
+2019-03-21 14:00:21.000 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:21.000 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:21.005 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.611
+2019-03-21 14:00:21.005 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.611
+2019-03-21 14:00:21.006 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:21.006 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:21.008 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - multinomial_naive_bayes
+2019-03-21 14:00:21.008 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - multinomial_naive_bayes
+2019-03-21 14:00:21.047 | INFO     | models.model_classification:grid_search:252 - CV score 0.885034628124059
+2019-03-21 14:00:21.047 | INFO     | models.model_classification:grid_search:252 - CV score 0.885034628124059
+2019-03-21 14:00:21.048 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:21.048 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:21.053 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.778
+2019-03-21 14:00:21.053 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.778
+2019-03-21 14:00:21.055 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:21.055 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:21.057 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - random_forest
+2019-03-21 14:00:21.057 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - random_forest
+2019-03-21 14:00:30.746 | INFO     | models.model_classification:grid_search:252 - CV score 0.8875940981632038
+2019-03-21 14:00:30.746 | INFO     | models.model_classification:grid_search:252 - CV score 0.8875940981632038
+2019-03-21 14:00:30.749 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 11, 'RF__min_samples_leaf': 1, 'RF__min_samples_split': 2, 'RF__n_estimators': 2}
+2019-03-21 14:00:30.749 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 11, 'RF__min_samples_leaf': 1, 'RF__min_samples_split': 2, 'RF__n_estimators': 2}
+2019-03-21 14:00:30.754 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.833
+2019-03-21 14:00:30.754 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.833
+2019-03-21 14:00:30.755 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:30.755 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:30.758 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - xgboost
+2019-03-21 14:00:30.758 | INFO     | __main__:run_all_model_class_models:14 - Working Phase II - xgboost
+2019-03-21 14:00:30.992 | INFO     | models.model_classification:grid_search:252 - CV score 0.8166214995483287
+2019-03-21 14:00:30.992 | INFO     | models.model_classification:grid_search:252 - CV score 0.8166214995483287
+2019-03-21 14:00:30.994 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 14:00:30.994 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 14:00:30.998 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.474
+2019-03-21 14:00:30.998 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.474
+2019-03-21 14:00:31.000 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.000 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.001 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - logistic_regression
+2019-03-21 14:00:31.001 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - logistic_regression
+2019-03-21 14:00:31.381 | INFO     | models.model_classification:grid_search:252 - CV score 0.9168925022583558
+2019-03-21 14:00:31.381 | INFO     | models.model_classification:grid_search:252 - CV score 0.9168925022583558
+2019-03-21 14:00:31.384 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 10.0, 'logistic__penalty': 'l2'}
+2019-03-21 14:00:31.384 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'logistic__C': 10.0, 'logistic__penalty': 'l2'}
+2019-03-21 14:00:31.385 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 14:00:31.385 | INFO     | models.model_classification:grid_search:258 - Odds coefficients
+2019-03-21 14:00:31.387 | INFO     | models.model_classification:grid_search:259 - [('Phase III subject mean', 1.743), ('Phase III trial length', 0.994), ('Phase III center count', 1.743), ('Phase III Completed', 1.383), ('Phase III Discontinued', 0.939), ('Phase III Other Trial Status', 1.205), ('Phase III Other Design Status', 0.964), ('Phase III cohort', 0.082), ('Phase III crossover', 1.206), ('Phase III double-blind', 1.268), ('Phase III multicentre', 0.541), ('Phase III observational', 3.219), ('Phase III open', 3.151), ('Phase III parallel', 22.645), ('Phase III prospective', 64.586), ('Phase III randomised', 0.003), ('Phase III retrospective', 1.137), ('Number of Organizations', 0.845)]
+2019-03-21 14:00:31.387 | INFO     | models.model_classification:grid_search:259 - [('Phase III subject mean', 1.743), ('Phase III trial length', 0.994), ('Phase III center count', 1.743), ('Phase III Completed', 1.383), ('Phase III Discontinued', 0.939), ('Phase III Other Trial Status', 1.205), ('Phase III Other Design Status', 0.964), ('Phase III cohort', 0.082), ('Phase III crossover', 1.206), ('Phase III double-blind', 1.268), ('Phase III multicentre', 0.541), ('Phase III observational', 3.219), ('Phase III open', 3.151), ('Phase III parallel', 22.645), ('Phase III prospective', 64.586), ('Phase III randomised', 0.003), ('Phase III retrospective', 1.137), ('Number of Organizations', 0.845)]
+2019-03-21 14:00:31.394 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 14:00:31.394 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 14:00:31.395 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.395 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.397 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - gaussian_naive_bayes
+2019-03-21 14:00:31.397 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - gaussian_naive_bayes
+2019-03-21 14:00:31.445 | INFO     | models.model_classification:grid_search:252 - CV score 0.9413429689852453
+2019-03-21 14:00:31.445 | INFO     | models.model_classification:grid_search:252 - CV score 0.9413429689852453
+2019-03-21 14:00:31.447 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:31.447 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:31.451 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.667
+2019-03-21 14:00:31.451 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.667
+2019-03-21 14:00:31.452 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.452 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.455 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - multinomial_naive_bayes
+2019-03-21 14:00:31.455 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - multinomial_naive_bayes
+2019-03-21 14:00:31.494 | INFO     | models.model_classification:grid_search:252 - CV score 0.9095754290876241
+2019-03-21 14:00:31.494 | INFO     | models.model_classification:grid_search:252 - CV score 0.9095754290876241
+2019-03-21 14:00:31.496 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:31.496 | INFO     | models.model_classification:grid_search:253 - Best parameters: {}
+2019-03-21 14:00:31.500 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.538
+2019-03-21 14:00:31.500 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.538
+2019-03-21 14:00:31.501 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.501 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:31.503 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - random_forest
+2019-03-21 14:00:31.503 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - random_forest
+2019-03-21 14:00:41.885 | INFO     | models.model_classification:grid_search:252 - CV score 0.9486299307437518
+2019-03-21 14:00:41.885 | INFO     | models.model_classification:grid_search:252 - CV score 0.9486299307437518
+2019-03-21 14:00:41.889 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 10, 'RF__min_samples_leaf': 2, 'RF__min_samples_split': 5, 'RF__n_estimators': 3}
+2019-03-21 14:00:41.889 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'RF__max_depth': 10, 'RF__min_samples_leaf': 2, 'RF__min_samples_split': 5, 'RF__n_estimators': 3}
+2019-03-21 14:00:41.895 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 14:00:41.895 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 14:00:41.896 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:41.896 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:41.898 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - xgboost
+2019-03-21 14:00:41.898 | INFO     | __main__:run_all_model_class_models:14 - Working Phase III - xgboost
+2019-03-21 14:00:42.244 | INFO     | models.model_classification:grid_search:252 - CV score 0.9412827461607949
+2019-03-21 14:00:42.244 | INFO     | models.model_classification:grid_search:252 - CV score 0.9412827461607949
+2019-03-21 14:00:42.246 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 14:00:42.246 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'XGB__colsample_bytree': 0.1, 'XGB__gamma': 4, 'XGB__learning_rate': 0.2, 'XGB__max_depth': 3, 'XGB__min_child_weight': 1.5, 'XGB__n_estimators': 100, 'XGB__reg_alpha': 0.01, 'XGB__reg_lambda': 0.01, 'XGB__scale_pos_weight': 9, 'XGB__subsample': 0.5}
+2019-03-21 14:00:42.252 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 14:00:42.252 | INFO     | models.model_classification:predict_test:267 - Precision Test Score: 0.6
+2019-03-21 14:00:42.254 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:42.254 | INFO     | models.model_classification:predict_test:268 - -------------------------------
+2019-03-21 14:00:42.274 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:00:42.274 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:00:42.280 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:00:42.280 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:01:57.881 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:01:57.881 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:01:57.885 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:01:57.885 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:02:19.080 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:02:19.080 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:02:19.080 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:02:19.083 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:02:19.083 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:02:19.083 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:03:34.137 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:03:34.137 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:03:34.137 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:03:34.137 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:03:34.147 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:03:34.147 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:03:34.147 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:03:34.147 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:08:57.044 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:08:57.051 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ols
+2019-03-21 14:08:57.928 | INFO     | models.model_classification:grid_search:252 - CV score 0.17567991403631064
+2019-03-21 14:08:57.931 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'ols__fit_intercept': True, 'ols__normalize': True}
+2019-03-21 14:08:57.936 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 915.73
+2019-03-21 14:08:57.938 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:08:57.941 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - lasso
+2019-03-21 14:08:59.728 | INFO     | models.model_classification:grid_search:252 - CV score 0.29097703190990476
+2019-03-21 14:08:59.731 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'lasso__alpha': 1, 'lasso__fit_intercept': True, 'lasso__normalize': True}
+2019-03-21 14:08:59.736 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 883.306
+2019-03-21 14:08:59.738 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:08:59.740 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - ridge
+2019-03-21 14:09:01.037 | INFO     | models.model_classification:grid_search:252 - CV score 0.25810446872119985
+2019-03-21 14:09:01.039 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'ridge__alpha': 0.1, 'ridge__fit_intercept': True, 'ridge__normalize': True}
+2019-03-21 14:09:01.044 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 896.687
+2019-03-21 14:09:01.046 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:01.049 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - ols
+2019-03-21 14:09:01.210 | INFO     | models.model_classification:grid_search:252 - CV score 0.17181463324150875
+2019-03-21 14:09:01.212 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'ols__fit_intercept': True, 'ols__normalize': False}
+2019-03-21 14:09:01.217 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 594.393
+2019-03-21 14:09:01.220 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:01.222 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - lasso
+2019-03-21 14:09:02.635 | INFO     | models.model_classification:grid_search:252 - CV score 0.28962815456958424
+2019-03-21 14:09:02.637 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'lasso__alpha': 3, 'lasso__fit_intercept': True, 'lasso__normalize': True}
+2019-03-21 14:09:02.641 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 604.978
+2019-03-21 14:09:02.643 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:02.644 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - ridge
+2019-03-21 14:09:03.576 | INFO     | models.model_classification:grid_search:252 - CV score 0.24266687398559234
+2019-03-21 14:09:03.577 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'ridge__alpha': 1, 'ridge__fit_intercept': True, 'ridge__normalize': True}
+2019-03-21 14:09:03.580 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 627.923
+2019-03-21 14:09:03.582 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:03.583 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - ols
+2019-03-21 14:09:03.758 | INFO     | models.model_classification:grid_search:252 - CV score -1.8038723714778956e+26
+2019-03-21 14:09:03.759 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'ols__fit_intercept': False, 'ols__normalize': True}
+2019-03-21 14:09:03.763 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 1417.753
+2019-03-21 14:09:03.764 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:03.766 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - lasso
+2019-03-21 14:09:05.116 | INFO     | models.model_classification:grid_search:252 - CV score 0.11398297049837099
+2019-03-21 14:09:05.118 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'lasso__alpha': 10, 'lasso__fit_intercept': True, 'lasso__normalize': True}
+2019-03-21 14:09:05.122 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 822.1
+2019-03-21 14:09:05.124 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:05.126 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - ridge
+2019-03-21 14:09:06.169 | INFO     | models.model_classification:grid_search:252 - CV score 0.2902007801644696
+2019-03-21 14:09:06.170 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'ridge__alpha': 10, 'ridge__fit_intercept': True, 'ridge__normalize': True}
+2019-03-21 14:09:06.175 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 847.763
+2019-03-21 14:09:06.176 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:09:47.865 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:09:47.875 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - rfregression
+2019-03-21 14:10:47.638 | INFO     | models.model_classification:grid_search:252 - CV score 0.48042986518279
+2019-03-21 14:10:47.644 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 4, 'rfregression__n_estimators': 500}
+2019-03-21 14:10:47.681 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 697.559
+2019-03-21 14:10:47.683 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:10:47.685 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - xgreg
+2019-03-21 14:10:48.999 | INFO     | models.model_classification:grid_search:252 - CV score 0.4648029488836456
+2019-03-21 14:10:49.001 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 14:10:49.005 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 732.692
+2019-03-21 14:10:49.007 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:10:49.010 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - rfregression
+2019-03-21 14:11:46.766 | INFO     | models.model_classification:grid_search:252 - CV score 0.688124178950942
+2019-03-21 14:11:46.776 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 6, 'rfregression__n_estimators': 500}
+2019-03-21 14:11:46.811 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 433.954
+2019-03-21 14:11:46.812 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:11:46.814 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - xgreg
+2019-03-21 14:11:48.001 | INFO     | models.model_classification:grid_search:252 - CV score 0.6651064625851849
+2019-03-21 14:11:48.003 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 14:11:48.006 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 464.02
+2019-03-21 14:11:48.007 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:11:48.010 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - rfregression
+2019-03-21 14:12:29.695 | INFO     | models.model_classification:grid_search:252 - CV score 0.7971938799431696
+2019-03-21 14:12:29.703 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 2, 'rfregression__n_estimators': 500}
+2019-03-21 14:12:29.747 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 453.211
+2019-03-21 14:12:29.748 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:12:29.749 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - xgreg
+2019-03-21 14:12:30.718 | INFO     | models.model_classification:grid_search:252 - CV score 0.7758475132064973
+2019-03-21 14:12:30.719 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 14:12:30.725 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 455.437
+2019-03-21 14:12:30.727 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:12:30.737 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 14:12:30.740 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - rfregression
+2019-03-21 14:13:18.802 | INFO     | models.model_classification:grid_search:252 - CV score 0.48042986518279
+2019-03-21 14:13:18.811 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 4, 'rfregression__n_estimators': 500}
+2019-03-21 14:13:18.843 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 697.559
+2019-03-21 14:13:18.844 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:13:18.846 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - xgreg
+2019-03-21 14:13:19.846 | INFO     | models.model_classification:grid_search:252 - CV score 0.4648029488836456
+2019-03-21 14:13:19.847 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 14:13:19.850 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 732.692
+2019-03-21 14:13:19.852 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:13:19.854 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - rfregression
+2019-03-21 14:14:18.099 | INFO     | models.model_classification:grid_search:252 - CV score 0.688124178950942
+2019-03-21 14:14:18.102 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 6, 'rfregression__n_estimators': 500}
+2019-03-21 14:14:18.138 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 433.954
+2019-03-21 14:14:18.140 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:14:18.144 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - xgreg
+2019-03-21 14:14:20.180 | INFO     | models.model_classification:grid_search:252 - CV score 0.6651064625851849
+2019-03-21 14:14:20.182 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 14:14:20.187 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 464.02
+2019-03-21 14:14:20.190 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:14:20.195 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - rfregression
+2019-03-21 14:15:06.646 | INFO     | models.model_classification:grid_search:252 - CV score 0.7971938799431696
+2019-03-21 14:15:06.656 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 2, 'rfregression__n_estimators': 500}
+2019-03-21 14:15:06.700 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 453.211
+2019-03-21 14:15:06.701 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 14:15:06.703 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - xgreg
+2019-03-21 14:15:07.867 | INFO     | models.model_classification:grid_search:252 - CV score 0.7758475132064973
+2019-03-21 14:15:07.868 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 14:15:07.872 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 455.437
+2019-03-21 14:15:07.873 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 17:12:45.949 | INFO     | __main__:run_all_model_regress_models:10 - ***Regression Models***
+2019-03-21 17:12:45.989 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - rfregression
+2019-03-21 17:13:46.919 | INFO     | models.model_classification:grid_search:252 - CV score 0.48042986518279
+2019-03-21 17:13:46.922 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 4, 'rfregression__n_estimators': 500}
+2019-03-21 17:13:46.997 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 697.559
+2019-03-21 17:13:46.999 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 17:13:47.003 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase I - xgreg
+2019-03-21 17:13:48.433 | INFO     | models.model_classification:grid_search:252 - CV score 0.4648029488836456
+2019-03-21 17:13:48.434 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 17:13:48.439 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 732.692
+2019-03-21 17:13:48.441 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 17:13:48.443 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - rfregression
+2019-03-21 17:14:42.755 | INFO     | models.model_classification:grid_search:252 - CV score 0.688124178950942
+2019-03-21 17:14:42.766 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 6, 'rfregression__n_estimators': 500}
+2019-03-21 17:14:42.816 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 433.954
+2019-03-21 17:14:42.819 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 17:14:42.823 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase II - xgreg
+2019-03-21 17:14:43.920 | INFO     | models.model_classification:grid_search:252 - CV score 0.6651064625851849
+2019-03-21 17:14:43.921 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 17:14:43.925 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 464.02
+2019-03-21 17:14:43.927 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 17:14:43.929 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - rfregression
+2019-03-21 17:15:23.690 | INFO     | models.model_classification:grid_search:252 - CV score 0.7971938799431696
+2019-03-21 17:15:23.799 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'rfregression__max_depth': 2, 'rfregression__n_estimators': 500}
+2019-03-21 17:15:23.861 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 453.211
+2019-03-21 17:15:23.863 | INFO     | models.model_regression:predict_test:239 - -------------------------------
+2019-03-21 17:15:23.864 | INFO     | __main__:run_all_model_regress_models:13 - Working Phase III - xgreg
+2019-03-21 17:15:24.816 | INFO     | models.model_classification:grid_search:252 - CV score 0.7758475132064973
+2019-03-21 17:15:24.818 | INFO     | models.model_classification:grid_search:253 - Best parameters: {'xgreg__learning_rate': 0.1, 'xgreg__loss': 'huber', 'xgreg__n_estimators': 100}
+2019-03-21 17:15:24.829 | INFO     | models.model_regression:predict_test:238 - RMSE Score: 455.437
+2019-03-21 17:15:24.830 | INFO     | models.model_regression:predict_test:239 - -------------------------------
