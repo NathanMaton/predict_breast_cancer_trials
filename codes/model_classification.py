@@ -9,7 +9,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import precision_score
+from sklearn.metrics import precision_score, accuracy_score
 
 # ML Models
 from sklearn.pipeline import Pipeline
@@ -220,12 +220,12 @@ class ClassificationModel():
                             ])
 
             self.param_grid = {
-                           'XGB__colsample_bytree':np.arange(start=.4,stop=.9,step=.1),
-                           'XGB__gamma': np.arange(start=0,stop=10,step=1),
+                           'XGB__colsample_bytree':np.arange(start=.4,stop=.9,step=.2),
+                           'XGB__gamma': np.arange(start=0,stop=10,step=2),
                            'XGB__min_child_weight':[1.5],
                            'XGB__learning_rate':np.arange(start=.01,stop=.08,step=.02),
                            'XGB__max_depth':np.arange(start=2,stop=5,step=1),
-                           'XGB__n_estimators':[1000,5000,10000],
+                           'XGB__n_estimators':[40,50,70,80,90,100,200,500],
                            'XGB__reg_alpha':[1e-2],
                            'XGB__reg_lambda':[1e-2],
                            'XGB__subsample':np.arange(start=.6,stop=.8,step=.1),
@@ -249,7 +249,7 @@ class ClassificationModel():
 
         # Performs a grid search for the model
         self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
-                              return_train_score=False,verbose=5,n_jobs=1)
+                              return_train_score=False,verbose=10,n_jobs=-1)
         self.model_gscv.fit(self.X_train, self.y_train)
 
         logger.info(f"CV score {self.model_gscv.best_score_}")
@@ -265,10 +265,12 @@ class ClassificationModel():
 
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
-
-        self.score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
-        logger.info(f'Precision Test Score: {np.round(self.score,3)}')
-        logger.info(f'-------------------------------')
+        self.accuracy_score = accuracy_score(y_true=self.y_test, y_pred=self.y_pred)
+        self.precision_score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
+        #self.precision_score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
+        logger.info(f'Accuracy Test Score: {np.round(self.accuracy_score,3)}')
+        logger.info(f'Precision Test Score: {np.round(self.precision_score,3)}')
+        logger.info(f'------------------------------------')
         #
 
 if __name__ == '__main__':

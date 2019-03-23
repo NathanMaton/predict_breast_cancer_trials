@@ -199,7 +199,7 @@ class RegressionModel(ClassificationModel):
         self.param_grid = {
             'rfregression__max_depth': [2,4,6,8,10,20,40],
             #'rfregression__n_estimators': [100,500,1000],
-            'rfregression__n_estimators': [100,200,3000,500,600,800,900,1000,2000],
+            'rfregression__n_estimators': [20,40,50,60,70,80,100,300],
             }
 
     def gbreg(self):
@@ -214,20 +214,28 @@ class RegressionModel(ClassificationModel):
             learning_rate=.1,
             n_estimators=100,
             random_state=42,
+            verbose=4
             )
 
         # Builds pipe. Apply a standard scaler to features
         self.pipe = Pipeline(
                     steps=[
-                        #('scale', StandardScaler()),
+                        ('scale', StandardScaler()),
                         ('xgreg', self.model)
                     ])
 
         # Parameters of pipelines can be set using ‘__’ separated parameter names:
+        # self.param_grid = {
+        #
+        #     'gbreg__loss': ['huber','ls','lad'],
+        #     'gbreg__learning_rate':[.001,.005,.01,.05,.1],
+        #     'gbreg__n_estimators':[40,60,80,100,200,400,600,800,1000],
+        #     }
         self.param_grid = {
-            'gbreg__loss': ['huber','ls','lad'],
-            'gbreg__learning_rate':[0.0001,.0005,.001,.005,.01,.05,.1],
-            'gbreg__n_estimators': [20,50,100,200,3000,500,600,800,900,1000,2000],
+
+            'gbreg__loss': ['huber'],
+            'gbreg__learning_rate':[.1],
+            'gbreg__n_estimators':[100],
             }
 
     def xgbreg(self):
@@ -242,6 +250,7 @@ class RegressionModel(ClassificationModel):
             learning_rate=.1,
             n_estimators=100,
             random_state=42,
+            verbose=2
             )
 
         # Builds pipe. Apply a standard scaler to features
@@ -258,7 +267,7 @@ class RegressionModel(ClassificationModel):
                'xgbreg__min_child_weight':[1.5],
                'xgbreg__learning_rate':np.arange(start=.01,stop=.08,step=.02),
                'xgbreg__max_depth':np.arange(start=2,stop=5,step=1),
-               'xgbreg__n_estimators':[500,1000,5000,10000],
+               'xgbreg__n_estimators':[40,50,70,80,90,100,200],
                'xgbreg__reg_alpha':[1e-2],
                'xgbreg__reg_lambda':[1e-2],
                'xgbreg__subsample':np.arange(start=.6,stop=.8,step=.1),
@@ -271,7 +280,7 @@ class RegressionModel(ClassificationModel):
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
         self.score = np.sqrt(mean_squared_error(y_true=self.y_test, y_pred=self.y_pred))
         logger.info(f'RMSE Score: {np.round(self.score,3)}')
-        logger.info(f'-------------------------------')
+        logger.info(f'----------------------------------')
 
 if __name__ == '__main__':
     print('Running regression model')
