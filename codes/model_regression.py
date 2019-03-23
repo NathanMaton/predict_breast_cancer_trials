@@ -246,11 +246,13 @@ class RegressionModel(ClassificationModel):
         # LogisticRegression, balanced is used because classes are highly
         # imbalanced
         self.model = XGBRegressor(
+
             max_depth=5,
             learning_rate=.1,
             n_estimators=100,
             random_state=42,
-            verbose=2
+            verbose=2,
+            nthreads=-1
             )
 
         # Builds pipe. Apply a standard scaler to features
@@ -284,8 +286,9 @@ class RegressionModel(ClassificationModel):
 
 if __name__ == '__main__':
     print('Running regression model')
-    # df_data1 = pd.read_pickle('data/df_1.pk')
-    # model1 = RegressionModel(df_data=df_data1,model_type='xgbreg')
+    df_data1 = pd.read_pickle('data/df_1.pk')
+    model1 = RegressionModel(df_data=df_data1,model_type='ols')
+
     #
     # df_data2 = pd.read_pickle('data/df_2.pk')
     # model2 = RegressionModel(df_data=df_data2,model_type='ridge')

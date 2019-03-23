@@ -9,7 +9,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import precision_score, accuracy_score
+from sklearn.metrics import precision_score, accuracy_score, log_loss, recall_score, f1_score
 
 # ML Models
 from sklearn.pipeline import Pipeline
@@ -190,12 +190,22 @@ class ClassificationModel():
         # Number of trees in random forest
         n_estimators = [20,40,60,80,100,500]
         # Maximum number of levels in tree
-        max_depth = [int(x) for x in np.linspace(10, 20, num=11)]
+        max_depth = [int(x) for x in np.linspace(10, 20, num=20)]
         max_depth = np.array(max_depth)
         # Minimum number of samples required to split a node
-        min_samples_split = np.array([2, 5, 10])
+        min_samples_split = np.array([2, 5, 8, 10])
         # Minimum number of samples required at each leaf node
         min_samples_leaf = np.array([2,4,6,8,10])
+
+        # # Test parameters for prototyping
+        # n_estimators = [20]
+        # # Maximum number of levels in tree
+        # max_depth = [int(x) for x in np.linspace(10, 20, num=2)]
+        # max_depth = np.array(max_depth)
+        # # Minimum number of samples required to split a node
+        # min_samples_split = np.array([2])
+        # # Minimum number of samples required at each leaf node
+        # min_samples_leaf = np.array([2])
 
 
 
@@ -211,6 +221,8 @@ class ClassificationModel():
             '''
             self.model = XGBClassifier(
                             seed=42,
+                            nthreads=-1,
+                            objective = 'binary:logistic',
                             )
 
             self.pipe = Pipeline(
@@ -222,16 +234,16 @@ class ClassificationModel():
             self.param_grid = {
                            'XGB__colsample_bytree':np.arange(start=.4,stop=.9,step=.2),
                            'XGB__gamma': np.arange(start=0,stop=10,step=2),
-                           'XGB__min_child_weight':[1.5],
-                           'XGB__learning_rate':np.arange(start=.01,stop=.08,step=.02),
-                           'XGB__max_depth':np.arange(start=2,stop=5,step=1),
+                           'XGB__min_child_weight':np.logspace(-2,2,10),
+                           'XGB__learning_rate':np.logspace(-3,-1,10),
+                           'XGB__max_depth':np.arange(start=3,stop=7,step=1),
                            'XGB__n_estimators':[40,50,70,80,90,100,200,500],
-                           'XGB__reg_alpha':[1e-2],
-                           'XGB__reg_lambda':[1e-2],
+                           'XGB__reg_alpha':np.logspace(-2,3,10),
+                           'XGB__reg_lambda':np.logspace(-2,3,10),
                            'XGB__subsample':np.arange(start=.6,stop=.8,step=.1),
                            'XGB__scale_pos_weight':[1,5,9,11]
                            }
-            # Test parameters
+            # #Test parameters small set for prototyping
             # self.param_grid = {
             #                'XGB__colsample_bytree':[.1],
             #                'XGB__gamma': [4],
@@ -245,7 +257,7 @@ class ClassificationModel():
             #                'XGB__scale_pos_weight':[9]
             #                }
 
-    def grid_search(self,cv=5):
+    def grid_search(self,cv=10):
 
         # Performs a grid search for the model
         self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
@@ -265,19 +277,36 @@ class ClassificationModel():
 
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
+        self.predict_prob = self.model_gscv.best_estimator_.predict_proba(self.X_test)
+
+        # Different score meaures
         self.accuracy_score = accuracy_score(y_true=self.y_test, y_pred=self.y_pred)
         self.precision_score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
+        self.recall_score = recall_score(y_true=self.y_test, y_pred=self.y_pred)
+        self.f1_score = f1_score(y_true=self.y_test, y_pred=self.y_pred)
+
+        # The average probability estimate
+        # we put in the negative value since we multiplied by -1/N
+        self.log_loss_score = np.exp(-1*log_loss(y_true=self.y_test, y_pred=self.predict_prob))
+
+
         #self.precision_score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
         logger.info(f'Accuracy Test Score: {np.round(self.accuracy_score,3)}')
         logger.info(f'Precision Test Score: {np.round(self.precision_score,3)}')
+        logger.info(f'Recall Test Score: {np.round(self.recall_score,3)}')
+        logger.info(f'F1 Test Score: {np.round(self.f1_score,3)}')
+        logger.info(f'Log Loss Test Loss Score: {np.round(self.log_loss_score,3)}')
         logger.info(f'------------------------------------')
         #
 
 if __name__ == '__main__':
     print('Running classification model')
-    #df_data1 = pd.read_pickle('data/df_1.pk')
-    #model1 = ClassificationModel(df_data=df_data1,model_type='xgboost')
+    df_data1 = pd.read_pickle('data/df_1.pk')
+    model1 = ClassificationModel(df_data=df_data1,model_type='random_forest')
 
+    model1.model_type
+    model1.model_gscv.best_estimator_.predict_proba(model1.X_test)[:,1]
+    model1.model_gscv.best_estimator_.predict(model1.X_test)
 
     # df_data2 = pd.read_pickle('data/df_2.pk')
     # model2 = ClassificationModel(df_data=df_data2,model_type='logistic_regression')
