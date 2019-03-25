@@ -75,34 +75,19 @@ def main():
     # # Start a log filter
     logger.add(f'logs/model_performance.log')
 
-<<<<<<< HEAD
-    class_models = ['logistic_regression', 'gaussian_naive_bayes',\
-    'multinomial_naive_bayes','random_forest','xgboost']
-    class_models = ['logistic_regression']
-    run_all_model_class_models(class_models)
-    logger.info('Classication models complete!')
-
-    # reg_models = ['ols', 'lasso','ridge','rfregression','xgbreg']
-    # run_all_model_regress_models(reg_models)
-    # logger.info('Regression models complete!')
-=======
-    class_models = ['logistic_regression']
-    run_trial_time_models(class_models)
+    # class_models = ['logistic_regression', 'gaussian_naive_bayes',\
+    # 'multinomial_naive_bayes','random_forest','xgboost']
+    class_models = ['logistic_regression','random_forest']
+    run_class_models(class_models)
     logger.info('Classication models complete!')
 
     # reg_models = ['ols', 'lasso','ridge','rfregression','xgbreg']
     # run_regress_models(reg_models)
     # logger.info('Regression models complete!')
 
-<<<<<<< HEAD
+
     # trial_time_models = ['logistic_regression', 'gaussian_naive_bayes',\
     # 'multinomial_naive_bayes']
-    # run_trial_time_models(trial_time_models)
-    # logger.info('Trial time models complete!')
->>>>>>> 36dddd8c6d3a37af26653871a4e71ad6ffa4c270
-=======
-    trial_time_models = ['logistic_regression', 'gaussian_naive_bayes',\
-    'multinomial_naive_bayes']
+    trial_time_models = ['logistic_regression', 'random_forest']
     run_trial_time_models(trial_time_models)
     logger.info('Trial time models complete!')
->>>>>>> 0969c81a9d114cde465d588a5203cb490b1bdfc6

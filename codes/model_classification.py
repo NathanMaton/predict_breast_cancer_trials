@@ -63,7 +63,7 @@ class ClassificationModel():
 
     def wrapper(self):
         self.test_train_split()
-        self.grid_search(cv=5)
+        self.grid_search(cv=6)
         self.predict_test()
 
     def timedelta_change(self,x):
