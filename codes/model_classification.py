@@ -278,24 +278,29 @@ class ClassificationModel():
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
         self.predict_prob = self.model_gscv.best_estimator_.predict_proba(self.X_test)
-
+        self.naive_accuracy_preds = np.ones(self.y_test.shape[0])*np.round(self.y_train.mean(),0)
         # Different score meaures
         self.accuracy_score = accuracy_score(y_true=self.y_test, y_pred=self.y_pred)
+        self.naive_accuracy_score = accuracy_score(y_true=self.y_test, y_pred=self.naive_accuracy_preds)
         self.precision_score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
         self.recall_score = recall_score(y_true=self.y_test, y_pred=self.y_pred)
         self.f1_score = f1_score(y_true=self.y_test, y_pred=self.y_pred)
 
         # The average probability estimate
         # we put in the negative value since we multiplied by -1/N
+        self.naive_log_loss_preds = np.ones(self.y_test.shape[0])*self.y_train.mean()
         self.log_loss_score = np.exp(-1*log_loss(y_true=self.y_test, y_pred=self.predict_prob))
+        self.naive_log_loss_score = np.exp(-1*log_loss(y_true=self.y_test, y_pred=self.naive_log_loss_preds))
 
 
         #self.precision_score = precision_score(y_true=self.y_test, y_pred=self.y_pred)
         logger.info(f'Accuracy Test Score: {np.round(self.accuracy_score,3)}')
+        logger.info(f'Naive Accuracy Test Score: {np.round(self.naive_accuracy_score,3)}')
         logger.info(f'Precision Test Score: {np.round(self.precision_score,3)}')
         logger.info(f'Recall Test Score: {np.round(self.recall_score,3)}')
         logger.info(f'F1 Test Score: {np.round(self.f1_score,3)}')
         logger.info(f'Log Loss Test Loss Score: {np.round(self.log_loss_score,3)}')
+        logger.info(f'Naive Log Loss Test Loss Score: {np.round(self.naive_log_loss_score,3)}')
         logger.info(f'------------------------------------')
         #
 

@@ -12,13 +12,13 @@ import numpy as np
 plt.style.use('ggplot')
 
 
-#potential results chart    
+#potential results chart
 phase_success_df = pd.DataFrame([['Phase 1',.63,'Industry Standard'],['Phase 1',.87,'Prototype'],
                         ['Phase 2',.3,'Industry Standard'],['Phase 2',.6,'Prototype'],
                         ['Phase 3',.58,'Industry Standard'],['Phase 3',.8,'Prototype'],
                         ],columns=['phase','percentage','model'])
 sns.barplot(x='phase', y='percentage',data=phase_success_df, hue='model')
-plt.title('Industry standard vs. project predicted success rates')
+plt.title('Industry standard vs. project predicted success rates');
 
 #plots phase 1 success
 df_phase1 = pd.read_pickle('data/df_1.pk')
