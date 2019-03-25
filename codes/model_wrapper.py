@@ -55,9 +55,10 @@ def main():
 
     class_models = ['logistic_regression', 'gaussian_naive_bayes',\
     'multinomial_naive_bayes','random_forest','xgboost']
+    class_models = ['logistic_regression']
     run_all_model_class_models(class_models)
     logger.info('Classication models complete!')
 
-    reg_models = ['ols', 'lasso','ridge','rfregression','xgbreg']
-    run_all_model_regress_models(reg_models)
-    logger.info('Regression models complete!')
+    # reg_models = ['ols', 'lasso','ridge','rfregression','xgbreg']
+    # run_all_model_regress_models(reg_models)
+    # logger.info('Regression models complete!')

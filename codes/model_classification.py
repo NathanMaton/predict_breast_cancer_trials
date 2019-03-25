@@ -176,7 +176,7 @@ class ClassificationModel():
         '''
         self.model = RandomForestClassifier(
                         random_state=42,
-                        class_weight="balanced",
+                        class_weight="balanced_subsample",
                         bootstrap = True,
                         max_features = 'auto')
 
