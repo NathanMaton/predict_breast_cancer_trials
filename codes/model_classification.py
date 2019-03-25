@@ -141,7 +141,7 @@ class ClassificationModel():
         # Parameters of pipelines can be set using ‘__’ separated parameter names:
         self.param_grid = {
             'logistic__penalty': ['l2'],
-            'logistic__C': np.logspace(-4, 1, 10),
+            'logistic__C': np.logspace(-4, 1, 30),
             }
 
     def gaussian_naive_bayes_model(self):

@@ -57,7 +57,7 @@ def main():
     'multinomial_naive_bayes','random_forest','xgboost']
     run_all_model_class_models(class_models)
     logger.info('Classication models complete!')
-    
+
     reg_models = ['ols', 'lasso','ridge','rfregression','xgbreg']
     run_all_model_regress_models(reg_models)
     logger.info('Regression models complete!')
