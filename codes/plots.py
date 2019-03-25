@@ -13,6 +13,27 @@ plt.style.use('ggplot')
 
 
 #potential results chart
+naive_phase_1 = .52
+model_phase_1 = .68
+naive_phase_2 = .85
+model_phase_2 = .85
+naive_phase_3 = .93
+model_phase_3 = .95
+#approval_percentage = .85
+total_naive = naive_phase_1*naive_phase_2*naive_phase_3
+total_model = model_phase_1*model_phase_2*model_phase_3
+total_naive
+total_model
+
+
+phase_success_df = pd.DataFrame([['Phase 1',naive_phase_1,'Industry Standard'],['Phase 1',model_phase_1,'Prototype'],
+                        ['Phase 2',naive_phase_2,'Industry Standard'],['Phase 2',model_phase_2,'Prototype'],
+                        ['Phase 3',naive_phase_3,'Industry Standard'],['Phase 3',model_phase_3,'Prototype'],
+                        ],columns=['phase','percentage','model'])
+sns.barplot(x='phase', y='percentage',data=phase_success_df, hue='model')
+plt.title('Industry standard vs. project predicted success rates');
+
+#potential time results
 phase_success_df = pd.DataFrame([['Phase 1',.63,'Industry Standard'],['Phase 1',.87,'Prototype'],
                         ['Phase 2',.3,'Industry Standard'],['Phase 2',.6,'Prototype'],
                         ['Phase 3',.58,'Industry Standard'],['Phase 3',.8,'Prototype'],

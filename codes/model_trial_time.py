@@ -298,11 +298,15 @@ class TrialTimeModel():
             logger.info(f'Odds coefficients')
             logger.info(list(zip(features,np.round(LR_coef,3))))
 
+    def naive_probs(self):
+        naive_prob=np.histogram(self.y_train, density=True, bins=[-.5,.5,1.5,2.5])[0]
+        self.naive_predict_prob=np.ones([self.y_test.shape[0],3])*naive_prob
     def predict_test(self):
 
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
         self.predict_prob = self.model_gscv.best_estimator_.predict_proba(self.X_test)
+        self.naive_probs()
 
         # Different score meaures
         self.accuracy_score = accuracy_score(y_true=self.y_test, y_pred=self.y_pred)
@@ -313,7 +317,11 @@ class TrialTimeModel():
         # The average probability estimate
         # we put in the negative value since we multiplied by -1/N
         self.log_loss_score = np.exp(-1*log_loss(y_true=self.y_test, y_pred=self.predict_prob, labels=[0,1,2]))
-        #self.naive_preds = np.ones(self.y_test.shape[0])*self.y_train.mean()
+        self.naive_log_loss_score = np.exp(-1*log_loss(y_true=self.y_test, y_pred=self.naive_predict_prob, labels=[0,1,2]))
+
+
+
+
         #self.naive_log_loss_score = np.exp(-1*log_loss(y_true=self.y_test, y_pred=self.naive_preds, labels=[0,1,2]))
 
 
@@ -323,7 +331,31 @@ class TrialTimeModel():
         logger.info(f'Recall Test Score: {np.round(self.recall_score,3)}')
         logger.info(f'F1 Test Score: {np.round(self.f1_score,3)}')
         logger.info(f'Log Loss Test Loss Score: {np.round(self.log_loss_score,3)}')
-        #logger.info(f'Naive Log Loss Test Loss Score: {np.round(self.naive_log_loss_score,3)}')
+        logger.info(f'Naive Log Loss Test Loss Score: {np.round(self.naive_log_loss_score,3)}')
 
         logger.info(f'------------------------------------')
         #
+
+
+if __name__ == '__main__':
+    #historic probabilty for the phase
+    df_data1 = pd.read_pickle('data/df_1.pk')
+    df_data1.head()
+    model1 = TrialTimeModel(df_data=df_data1,model_type='logistic_regression')
+
+    model1.X_train.head()
+    hist = model1.y_train.hist()
+    p=np.histogram(model1.y_train, density=True, bins=[-.5,.5,1.5,2.5])[0]
+    preds=np.ones([model1.y_test.shape[0],3])*p
+
+    p
+    preds=np.random.choice([0,1,2],size=model1.y_test.shape[0],p=p)
+    preds.pop().pop().pop()
+    log_loss(model1.y_test,preds)
+    model1.y_test
+    preds
+    model1.y_train[model1.y_train==0].shape
+    model1.y_train.shape
+    model1.predict_prob.sum(axis=1)
+    240/409
+    #draw randomly length of y_test times with the historic prob Distribution, this is y_pred
