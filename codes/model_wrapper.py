@@ -73,7 +73,7 @@ def run_trial_time_models(models):
 def main():
     #
     # # Start a log filter
-    logger.add(f'logs/model_performance.log')
+    #logger.add(f'logs/model_performance.log')
 
     # class_models = ['logistic_regression', 'gaussian_naive_bayes',\
     # 'multinomial_naive_bayes','random_forest','xgboost']
