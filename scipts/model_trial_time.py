@@ -156,7 +156,6 @@ class TrialTimeModel():
         y = self.df_data[self.label_col_name]
 
         # Split the dataset in two equal parts
-
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
             X, y, test_size=test_size, random_state=random_state)
 
@@ -241,7 +240,7 @@ class TrialTimeModel():
         # Minimum number of samples required at each leaf node
         min_samples_leaf = np.array([2, 4, 6, 8, 10])
 
-        # # Test parameters for prototyping
+        # Test parameters for prototyping
         # n_estimators = [20]
         # # Maximum number of levels in tree
         # max_depth = [int(x) for x in np.linspace(10, 20, num=2)]
@@ -256,7 +255,6 @@ class TrialTimeModel():
                            'RF__max_depth': max_depth,
                            'RF__min_samples_split': min_samples_split,
                            'RF__min_samples_leaf': min_samples_leaf}
-    # MAKE THE PARAMETERS
 
     def xgboost_model(self):
         '''
@@ -301,6 +299,9 @@ class TrialTimeModel():
         #                }
 
     def grid_search(self, cv=10):
+        '''
+        Runs the grid search and repots best parameters
+        '''
 
         # Performs a grid search for the model
         self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
@@ -310,6 +311,7 @@ class TrialTimeModel():
         logger.info(f"CV score {self.model_gscv.best_score_}")
         logger.info(f"Best parameters: {self.model_gscv.best_params_}")
 
+        # For logistic regression print out beta values
         if self.model_type == 'logistic_regression':
             LR_coef = np.exp(
                 self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
@@ -373,8 +375,8 @@ class TrialTimeModel():
         logger.info(
             f'Naive Log Loss Test Loss Score: {np.round(self.naive_log_loss_score,3)}')
 
-        logger.info(f'------------------------------------')
-        #
+        logger.info(
+            f'---------------------------------------------------------')
 
 
 if __name__ == '__main__':

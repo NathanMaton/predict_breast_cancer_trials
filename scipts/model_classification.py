@@ -284,8 +284,10 @@ class ClassificationModel():
         #                'XGB__scale_pos_weight':[9]
         #                }
 
-    def grid_search(self, cv=10):
-
+    def grid_search(self, cv=5):
+        '''
+        Runs the grid search and repots best parameters
+        '''
         # Performs a grid search for the model
         self.model_gscv = GridSearchCV(self.pipe, param_grid=self.param_grid, iid=False, cv=cv,
                                        return_train_score=False, verbose=10, n_jobs=-1)
@@ -294,6 +296,7 @@ class ClassificationModel():
         logger.info(f"CV score {self.model_gscv.best_score_}")
         logger.info(f"Best parameters: {self.model_gscv.best_params_}")
 
+        # For logistic regression print out beta values
         if self.model_type == 'logistic_regression':
             LR_coef = np.exp(
                 self.model_gscv.best_estimator_.steps[1][1].coef_)[0]
@@ -302,6 +305,9 @@ class ClassificationModel():
             logger.info(list(zip(features, np.round(LR_coef, 3))))
 
     def predict_test(self):
+        '''
+        Calculate test prediction and reports back various metrics
+        '''
         # Make a prediction on entire training set
         self.y_pred = self.model_gscv.best_estimator_.predict(self.X_test)
 
@@ -357,9 +363,8 @@ class ClassificationModel():
             f'Log Loss Test Loss Score: {np.round(self.log_loss_score,3)}')
         logger.info(
             f'Naive Log Loss Test Loss Score: {np.round(self.naive_log_loss_score,3)}')
-        logger.info(f'---------------------------------------------------------')
-
-
+        logger.info(
+            f'---------------------------------------------------------')
 
 
 if __name__ == '__main__':
