@@ -1,6 +1,6 @@
-import codes.model_classification as class_obj
-import codes.model_regression as reg_obj
-import codes.model_trial_time as trial_time_obj
+import scripts.model_classification as class_obj
+import scripts.model_regression as reg_obj
+import scripts.model_trial_time as trial_time_obj
 import pandas as pd
 import time
 from loguru import logger

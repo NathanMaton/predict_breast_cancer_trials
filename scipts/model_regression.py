@@ -20,7 +20,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 from xgboost.sklearn import XGBRegressor
 
 from sklearn.metrics import mean_squared_error, r2_score
-from codes.model_classification import ClassificationModel
+from scripts.model_classification import ClassificationModel
 
 # import logger
 from loguru import logger
