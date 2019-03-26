@@ -1,7 +1,20 @@
 
 '''
-Scipt builds a logistic regression model for a multi classification
+Scipt builds a classification model to prediction how long a drug will take to
+complete a particular phases
 
+Inputs:
+data: dataframe from the freature extraction script
+model_type: which classification model to run. options are as follows
+model_dict = [
+    'logistic_regression','gaussian_naive_bayes'
+    'multinomial_naive_bayes','random_forest',xgboost'
+    ]
+
+Output:
+Model results
+
+The input to the
 '''
 import numpy as np
 import matplotlib.pyplot as plt
@@ -63,7 +76,7 @@ class TrialTimeModel():
 
     def wrapper(self):
         self.test_train_split()
-        self.grid_search(cv=5)
+        self.grid_search(cv=6)
         self.predict_test()
 
     def timedelta_change(self,x):
@@ -105,28 +118,33 @@ class TrialTimeModel():
 
 
     def drop_bad_columns(self):
-        bad_columns = 'Completed|Discontinued|Other Trial Status'
+        bad_columns = 'Completed|Discontinued|Other Trial Status|Pass'
         bad_column_names = self.df_data.filter(regex=bad_columns).columns
-        self.df_data = self.df_data.drop([bad_column_names],axis=1)
+        self.df_data = self.df_data.drop(bad_column_names,axis=1)
 
 
 
     def test_train_split(self,random_state=42,test_size=0.2):
+
         '''
         Performs a train test split
         '''
 
         # Make adjustment of time_delta_objects to floats - needed to run model
         if self.df_data.filter(regex='trial length').shape[1] == 1:
+
             self.apply_length_adjustment()
 
+        # Moves features that may leak information
+        self.drop_bad_columns()
 
         # Pulls the label column from dataframe and assigns
         # other columns as feature
         # First check if the column there's only one column with pass in it
-        if self.df_data.filter(regex='Pass').shape[1] != 1:
-            logger.info('More than one pass label column - adjust column names')
-            return
+
+        # if self.df_data.filter(regex='Pass').shape[1] != 1:
+        #     logger.info('More than one pass label column - adjust column names')
+        #     return
 
 
         # Change data type to all floats
@@ -137,6 +155,7 @@ class TrialTimeModel():
         y = self.df_data[self.label_col_name]
 
         # Split the dataset in two equal parts
+
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
             X, y, test_size=test_size, random_state=random_state)
 
@@ -339,4 +358,9 @@ class TrialTimeModel():
 
 if __name__ == '__main__':
     #historic probabilty for the phase
-    print('inside main')
+    df_data1 = pd.read_pickle('data/df_1.pk')
+
+    model1 = TrialTimeModel(df_data=df_data1,model_type='logistic_regression')
+    np.exp(model1.model_gscv.best_estimator_.steps[1][1].coef_)
+
+    model1.X_train.columns.tolist()

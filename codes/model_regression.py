@@ -288,6 +288,9 @@ if __name__ == '__main__':
     print('Running regression model')
     df_data1 = pd.read_pickle('data/df_1.pk')
     model1 = RegressionModel(df_data=df_data1,model_type='ols')
+    df_data1.columns
+
+    #['Phase I Completed', 'Phase I Discontinued',' Phase I Other Trial Status']
 
     #
     # df_data2 = pd.read_pickle('data/df_2.pk')

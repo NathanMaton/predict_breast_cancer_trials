@@ -185,7 +185,7 @@ phase_time_eda_df = pd.DataFrame([
                         ['Phase 2',.53,'0-1.5'],['Phase 2',.31,'1.5-3'],['Phase 2',.15,'3+'],
                         ['Phase 3',.87,'0-1.5'],['Phase 3',.11,'1.5-3'],['Phase 3',.02,'3+'],
                         ],columns=['phase','percentage','completion time (in years)'])
-plot10=sns.barplot(x='phase', y='percentage',data=phase_time_eda_df, hue='class')
+plot10=sns.barplot(x='phase', y='percentage',data=phase_time_eda_df, hue='completion time (in years)')
 plt.title('Class balance for time to phase completion')
 plt.ylabel('Percentage')
 plt.xlabel('Phases')

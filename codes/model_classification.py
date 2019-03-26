@@ -1,6 +1,18 @@
 
 '''
-Scipt builds a logistic regression model for a binary classification
+Scipt builds a classification model to prediction whether a drug will pass a
+particule phase
+
+Inputs:
+data: dataframe from the freature extraction script
+model_type: which classification model to run. options are as follows
+model_dict = [
+    'logistic_regression','gaussian_naive_bayes'
+    'multinomial_naive_bayes','random_forest',xgboost'
+    ]
+
+Output:
+Model results
 
 '''
 import numpy as np
@@ -63,7 +75,7 @@ class ClassificationModel():
 
     def wrapper(self):
         self.test_train_split()
-        self.grid_search(cv=5)
+        self.grid_search(cv=6)
         self.predict_test()
 
     def timedelta_change(self,x):
@@ -84,10 +96,19 @@ class ClassificationModel():
         self.df_data.fillna(0,inplace=True)
 
 
+    def drop_bad_columns(self):
+        bad_columns = 'Completed|Discontinued|Other Trial Status'
+        bad_column_names = self.df_data.filter(regex=bad_columns).columns.tolist()
+
+        self.df_data = self.df_data.drop(bad_column_names,axis=1)
+
     def test_train_split(self,random_state=42,test_size=0.2):
         '''
         Performs a train test split
         '''
+
+        # MOVES SOME LEAKY INFORMATION
+        self.drop_bad_columns()
 
         # Make adjustment of time_delta_objects to floats - needed to run model
         if self.df_data.filter(regex='trial length').shape[1] == 1:
@@ -100,6 +121,8 @@ class ClassificationModel():
         if self.df_data.filter(regex='Pass').shape[1] != 1:
             logger.info('More than one pass label column - adjust column names')
             return
+
+
 
         # Pulls the column name
         label_col_name = self.df_data.filter(regex='Pass').columns[0]
@@ -141,7 +164,7 @@ class ClassificationModel():
         # Parameters of pipelines can be set using ‘__’ separated parameter names:
         self.param_grid = {
             'logistic__penalty': ['l2'],
-            'logistic__C': np.logspace(-4, 1, 10),
+            'logistic__C': np.logspace(-4, 1, 30),
             }
 
     def gaussian_naive_bayes_model(self):
@@ -176,7 +199,7 @@ class ClassificationModel():
         '''
         self.model = RandomForestClassifier(
                         random_state=42,
-                        class_weight="balanced",
+                        class_weight="balanced_subsample",
                         bootstrap = True,
                         max_features = 'auto')
 
@@ -307,11 +330,7 @@ class ClassificationModel():
 if __name__ == '__main__':
     print('Running classification model')
     df_data1 = pd.read_pickle('data/df_1.pk')
-    model1 = ClassificationModel(df_data=df_data1,model_type='random_forest')
-
-    model1.model_type
-    model1.model_gscv.best_estimator_.predict_proba(model1.X_test)[:,1]
-    model1.model_gscv.best_estimator_.predict(model1.X_test)
+    model1 = ClassificationModel(df_data=df_data1,model_type='logistic_regression')
 
     # df_data2 = pd.read_pickle('data/df_2.pk')
     # model2 = ClassificationModel(df_data=df_data2,model_type='logistic_regression')

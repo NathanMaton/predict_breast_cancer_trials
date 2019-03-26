@@ -73,17 +73,21 @@ def run_trial_time_models(models):
 def main():
     #
     # # Start a log filter
-    logger.add(f'logs/model_performance.log')
+    #logger.add(f'logs/model_performance.log')
 
-    class_models = ['logistic_regression']
-    run_trial_time_models(class_models)
+    # class_models = ['logistic_regression', 'gaussian_naive_bayes',\
+    # 'multinomial_naive_bayes','random_forest','xgboost']
+    class_models = ['logistic_regression','random_forest']
+    run_class_models(class_models)
     logger.info('Classication models complete!')
 
     # reg_models = ['ols', 'lasso','ridge','rfregression','xgbreg']
     # run_regress_models(reg_models)
     # logger.info('Regression models complete!')
 
-    trial_time_models = ['logistic_regression', 'gaussian_naive_bayes',\
-    'multinomial_naive_bayes']
+
+    # trial_time_models = ['logistic_regression', 'gaussian_naive_bayes',\
+    # 'multinomial_naive_bayes']
+    trial_time_models = ['logistic_regression', 'random_forest']
     run_trial_time_models(trial_time_models)
     logger.info('Trial time models complete!')
