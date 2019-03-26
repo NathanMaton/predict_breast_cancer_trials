@@ -1,5 +1,5 @@
 """
-Script for plotting for presentation
+Script for plotting for project presentation.
 """
 import pandas as pd
 import seaborn as sns
