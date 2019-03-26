@@ -339,23 +339,4 @@ class TrialTimeModel():
 
 if __name__ == '__main__':
     #historic probabilty for the phase
-    df_data1 = pd.read_pickle('data/df_1.pk')
-    df_data1.head()
-    model1 = TrialTimeModel(df_data=df_data1,model_type='logistic_regression')
-
-    model1.X_train.head()
-    hist = model1.y_train.hist()
-    p=np.histogram(model1.y_train, density=True, bins=[-.5,.5,1.5,2.5])[0]
-    preds=np.ones([model1.y_test.shape[0],3])*p
-
-    p
-    preds=np.random.choice([0,1,2],size=model1.y_test.shape[0],p=p)
-    preds.pop().pop().pop()
-    log_loss(model1.y_test,preds)
-    model1.y_test
-    preds
-    model1.y_train[model1.y_train==0].shape
-    model1.y_train.shape
-    model1.predict_prob.sum(axis=1)
-    240/409
-    #draw randomly length of y_test times with the historic prob Distribution, this is y_pred
+    print('inside main')
