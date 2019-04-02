@@ -44,11 +44,11 @@ def change_time_data_type(df_data):
 plt.style.use("ggplot")
 %config InlineBackend.figure_format = 'svg'
 
-# plots phase 1 success
+# plots phase 1 success - ignore.
 df_phase1 = pd.read_pickle("data/df_1.pk")
 plot1 = sns.countplot(df_phase1["Phase I Pass"])
 plt.title("Phase I Pass rate")
-plt.yticks([0, 50, 100])
+plt.yticks([0, 50, 100]);
 figure = plot1.get_figure()
 figure.savefig("images/phase1_success.svg", bbox_inches="tight")
 
@@ -151,6 +151,13 @@ figure.savefig("images/time_results.svg", bbox_inches="tight")
 
 
 ## MODEL SUCCESS RESULTS CHARTS
+success_historical_phase_1 = .51
+success_historical_phase_2 = .13
+success_historical_phase_3 = .08
+success_total_historical = (
+    success_historical_phase_1 * success_historical_phase_2 * success_historical_phase_3
+)
+success_total_historical
 
 # This data was input from our logging files after running our models.
 success_naive_phase_1 = 0.5
@@ -189,7 +196,6 @@ time_pct_diff
 expected_value_using_model = 2.6 * (time_pct_diff)
 
 # potential success results
-phase_success_df.head()
 
 phase_success_df = pd.DataFrame(
     [
@@ -205,15 +211,14 @@ phase_success_df = pd.DataFrame(
     columns=["phase", "percentage", "model"],
 )
 plot11 = sns.barplot(x="phase", y="percentage", data=phase_success_df, hue="model")
-plt.title("Industry standard vs. model predicted success rates")
-plt.ylabel("Model confidence (exp. log loss)")
+#plt.title("Industry standard vs. model predicted success rates")
+plt.ylabel("Model confidence")
 plt.xlabel("Phases")
 figure = plot11.get_figure()
 figure.savefig("images/success_results.svg", bbox_inches="tight")
 
 
 ## TRIAL LENGTH MODEL RESULTS CHARTS CODE ##
-phase_time_df.head()
 phase_time_df = pd.DataFrame(
     [
         ["Phase 1", time_naive_phase_1, "Industry Standard"],
@@ -228,8 +233,26 @@ phase_time_df = pd.DataFrame(
     columns=["phase", "percentage", "model"],
 )
 plot12 = sns.barplot(x="phase", y="percentage", data=phase_time_df, hue="model")
-plt.title("Industry standard vs. model predicted time to completion")
-plt.ylabel("Model confidence (exp. log loss)")
+#plt.title("Industry standard vs. model predicted time to completion")
+plt.ylabel("Model confidence")
 plt.xlabel("Phases")
 figure = plot12.get_figure()
 figure.savefig("images/time_results.svg", bbox_inches="tight")
+
+
+## TRIAL LENGTH MODEL RESULTS CHARTS CODE ##
+phase_history_df = pd.DataFrame(
+    [
+        ["Phase 1", success_historical_phase_1],
+        ["Phase 2", success_historical_phase_2],
+        ["Phase 3", success_historical_phase_3],
+        ["Phase I to approval", success_total_historical],
+    ],
+    columns=["phase", "percentage"],
+)
+plot13 = sns.barplot(x="phase", y="percentage", data=phase_history_df, color='blue')
+plt.title("Breast Cancer Probability of Success")
+plt.ylabel("Probability")
+plt.xlabel("Phases")
+figure = plot13.get_figure()
+figure.savefig("images/phase_history.svg", bbox_inches="tight")
