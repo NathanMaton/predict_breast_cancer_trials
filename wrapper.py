@@ -2,8 +2,8 @@
 Wrapper that will be used specifically for dockerfile to run all the models.
 '''
 
-from codes import data_feature_extraction
-from codes import model_wrapper
+from scripts import data_feature_extraction
+from scripts import model_wrapper
 from loguru import logger
 
 if __name__ == '__main__':
